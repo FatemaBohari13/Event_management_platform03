@@ -1,2555 +1,2996 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Eventra - Event Management Platform</title>
-
-<style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-:root {
-  --primary: #6C5CE7;
-  --primary-dark: #5548C8;
-  --bg: #F8F9FC;
-  --surface: #FFFFFF;
-  --text: #101828;
-  --muted: #667085;
-  --border: #E4E7EC;
-  --success: #12B76A;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  -webkit-font-smoothing: antialiased;
-}
-
-button,
-a,
-input {
-  transition: all 0.2s ease;
-}
-
-button {
-  font-family: inherit;
-  cursor: pointer;
-}
-
-/* ================= WELCOME ================= */
-
-.welcome {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 50px;
-  padding: 60px 8%;
-  background: var(--bg);
-}
-
-.welcome-content {
-  flex: 1;
-  max-width: 600px;
-}
-
-.logo {
-  color: var(--primary);
-  font-size: 30px;
-  font-weight: 800;
-  margin-bottom: 55px;
-}
-
-.welcome h1 {
-  font-size: clamp(42px, 5vw, 64px);
-  line-height: 1.05;
-  letter-spacing: -2px;
-  margin-bottom: 22px;
-}
-
-.welcome h1 span {
-  color: var(--primary);
-}
-
-.welcome p {
-  color: var(--muted);
-  font-size: 18px;
-  line-height: 1.7;
-  max-width: 520px;
-  margin-bottom: 32px;
-}
-
-.primary-button {
-  border: 0;
-  background: var(--primary);
-  color: white;
-  padding: 15px 25px;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: 700;
-  box-shadow: 0 8px 18px rgba(108,92,231,.22);
-}
-
-.primary-button:hover {
-  transform: translateY(-2px);
-  background: var(--primary-dark);
-}
-
-.visual-card {
-  width: min(500px, 45vw);
-  min-height: 500px;
-  border-radius: 30px;
-  background: linear-gradient(145deg, #6C5CE7, #9A8FF2);
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 25px 55px rgba(108,92,231,.25);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.visual-circle {
-  position: absolute;
-  border-radius: 50%;
-  background: rgba(255,255,255,.13);
-}
-
-.circle-one {
-  width: 270px;
-  height: 270px;
-  top: -80px;
-  right: -70px;
-}
-
-.circle-two {
-  width: 190px;
-  height: 190px;
-  bottom: -50px;
-  left: -50px;
-}
-
-.visual-ticket {
-  width: 72%;
-  background: white;
-  border-radius: 20px;
-  padding: 25px;
-  box-shadow: 0 20px 35px rgba(0,0,0,.12);
-  position: relative;
-  z-index: 2;
-}
-
-.visual-ticket h3 {
-  margin: 12px 0 8px;
-  font-size: 24px;
-}
-
-.visual-ticket p {
-  margin: 0;
-  font-size: 14px;
-  color: var(--muted);
-}
-
-.ticket-icon-big {
-  font-size: 55px;
-}
-
-/* ================= LOGIN ================= */
-
-.login-screen {
-  display: none;
-  min-height: 100vh;
-  align-items: center;
-  justify-content: center;
-  padding: 30px;
-  background: linear-gradient(135deg,#F8F9FC,#F0EEFF);
-}
-
-.login-card {
-  width: min(440px,100%);
-  background: white;
-  padding: 42px;
-  border-radius: 22px;
-  box-shadow: 0 20px 50px rgba(16,24,40,.10);
-}
-
-.login-logo {
-  color: var(--primary);
-  font-size: 28px;
-  font-weight: 800;
-  text-align: center;
-  margin-bottom: 28px;
-}
-
-.login-card h2 {
-  text-align: center;
-  font-size: 30px;
-  margin-bottom: 8px;
-}
-
-.login-subtitle {
-  text-align: center;
-  color: var(--muted);
-  margin-bottom: 30px;
-}
-
-.login-card label {
-  display: block;
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
-
-.login-card input {
-  width: 100%;
-  padding: 14px 15px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  margin-bottom: 18px;
-  font-size: 15px;
-  outline: none;
-}
-
-.login-card input:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 4px rgba(108,92,231,.09);
-}
-
-.password-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.password-row a,
-.signup-text a {
-  color: var(--primary);
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.login-button,
-.google-button {
-  width: 100%;
-  padding: 14px;
-  border-radius: 10px;
-  font-size: 15px;
-  font-weight: 700;
-}
-
-.login-button {
-  border: 0;
-  background: var(--primary);
-  color: white;
-}
-
-.login-button:hover {
-  background: var(--primary-dark);
-  transform: translateY(-2px);
-}
-
-.google-button {
-  background: white;
-  border: 1px solid var(--border);
-}
-
-.google-button:hover {
-  background: #F8F9FC;
-}
-
-.divider {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: #98A2B3;
-  font-size: 12px;
-  margin: 24px 0;
-}
-
-.divider::before,
-.divider::after {
-  content: "";
-  height: 1px;
-  background: var(--border);
-  flex: 1;
-}
-
-.signup-text {
-  text-align: center;
-  margin-top: 22px;
-  color: var(--muted);
-  font-size: 14px;
-}
-
-/* ================= HOME ================= */
-
-.home-screen {
-  display: none;
-  min-height: 100vh;
-  background: var(--bg);
-}
-
-.navbar {
-  height: 74px;
-  padding: 0 6%;
-  background: white;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: 0 1px 3px rgba(16,24,40,.04);
-  position: sticky;
-  top: 0;
-  z-index: 20;
-}
-
-.nav-logo {
-  font-size: 25px;
-  font-weight: 800;
-  color: var(--primary);
-}
-
-.navbar nav {
-  display: flex;
-  gap: 30px;
-}
-
-.navbar nav a {
-  text-decoration: none;
-  color: var(--muted);
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.navbar nav a:hover,
-.navbar nav a.active {
-  color: var(--primary);
-}
-
-.profile-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 0;
-  color: white;
-  background: var(--primary);
-  font-weight: 800;
-}
-
-.home-container {
-  width: min(1180px,90%);
-  margin: auto;
-  padding: 45px 0 90px;
-}
-
-.hero {
-  min-height: 420px;
-  border-radius: 26px;
-  background: linear-gradient(135deg,#17122F,#6C5CE7);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 60px;
-  overflow: hidden;
-  position: relative;
-  box-shadow: 0 12px 35px rgba(16,24,40,.08);
-}
-
-.hero-content {
-  width: 55%;
-  position: relative;
-  z-index: 2;
-}
-
-.hero-label {
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 1.4px;
-}
-
-.hero h1 {
-  font-size: clamp(38px,5vw,58px);
-  line-height: 1.08;
-  letter-spacing: -1.5px;
-  margin: 16px 0;
-}
-
-.hero h1 span {
-  color: #D9D3FF;
-}
-
-.hero-content > p {
-  color: #DDD9EF;
-  line-height: 1.6;
-  max-width: 560px;
-  margin-bottom: 25px;
-}
-
-.search-box {
-  background: white;
-  width: min(520px,100%);
-  border-radius: 12px;
-  padding: 5px 16px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: #667085;
-  box-shadow: 0 6px 18px rgba(16,24,40,.07);
-}
-
-.search-box input {
-  width: 100%;
-  border: 0;
-  outline: 0;
-  padding: 13px 0;
-  font-size: 15px;
-}
-
-.hero-decoration {
-  width: 40%;
-  height: 100%;
-  position: relative;
-}
-
-.floating-card {
-  position: absolute;
-  background: rgba(255,255,255,.94);
-  color: var(--text);
-  padding: 15px 20px;
-  border-radius: 13px;
-  box-shadow: 0 15px 30px rgba(0,0,0,.15);
-  font-weight: 700;
-}
-
-.card-one {
-  right: 25px;
-  top: 55px;
-}
-
-.card-two {
-  left: 10px;
-  bottom: 55px;
-}
-
-.hero-circle {
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  background: rgba(255,255,255,.12);
-  display: grid;
-  place-items: center;
-  font-size: 70px;
-  position: absolute;
-  right: 65px;
-  top: 120px;
-}
-
-.section {
-  margin-top: 55px;
-}
-
-.section-heading {
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  margin-bottom: 22px;
-}
-
-.small-label {
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 1.4px;
-  color: var(--primary);
-}
-
-.section-heading h2 {
-  margin-top: 7px;
-  font-size: 27px;
-}
-
-.section-heading a {
-  color: var(--primary);
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.categories {
-  display: grid;
-  grid-template-columns: repeat(5,1fr);
-  gap: 15px;
-}
-
-.category {
-  border: 1px solid var(--border);
-  background: white;
-  border-radius: 16px;
-  padding: 22px 12px;
-  text-align: center;
-}
-
-.category span {
-  display: block;
-  font-size: 32px;
-  margin-bottom: 10px;
-}
-
-.category:hover {
-  transform: translateY(-4px);
-  border-color: var(--primary);
-  box-shadow: 0 10px 24px rgba(16,24,40,.08);
-}
-
-.event-grid {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 20px;
-}
-
-.home-event-card {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  overflow: hidden;
-  cursor: pointer;
-}
-
-.home-event-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 14px 30px rgba(16,24,40,.09);
-}
-
-.event-image {
-  height: 200px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 60px;
-}
-
-.music-image {
-  background: linear-gradient(135deg,#221744,#8D55D9);
-}
-
-.tech-image {
-  background: linear-gradient(135deg,#09243A,#2584B5);
-}
-
-.workshop-image {
-  background: linear-gradient(135deg,#5C2449,#D66B8A);
-}
-
-.event-badge {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  background: rgba(255,255,255,.94);
-  color: var(--text);
-  padding: 7px 10px;
-  border-radius: 999px;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 1px;
-}
-
-.heart-btn,
-.details-heart {
-  position: absolute;
-  top: 13px;
-  right: 13px;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  border: 0;
-  background: rgba(255,255,255,.94);
-  font-size: 21px;
-  z-index: 3;
-}
-
-.heart-btn.favorited,
-.details-heart.favorited {
-  color: #E04471;
-}
-
-.event-info {
-  padding: 20px;
-}
-
-.event-date {
-  color: var(--primary);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 1px;
-}
-
-.event-info h3 {
-  font-size: 19px;
-  margin: 8px 0;
-}
-
-.event-info p {
-  color: var(--muted);
-  font-size: 13px;
-  margin-bottom: 18px;
-}
-
-.event-bottom {
-  display: flex;
-  justify-content: space-between;
-  color: var(--muted);
-  font-size: 13px;
-}
-
-.upcoming-list {
-  display: grid;
-  gap: 14px;
-}
-
-.upcoming-card {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 18px;
-  display: flex;
-  align-items: center;
-  gap: 18px;
-}
-
-.upcoming-date {
-  width: 58px;
-  text-align: center;
-  border-right: 1px solid var(--border);
-  padding-right: 18px;
-}
-
-.upcoming-date strong {
-  display: block;
-  font-size: 25px;
-}
-
-.upcoming-date span {
-  font-size: 11px;
-  color: var(--primary);
-  font-weight: 800;
-}
-
-.upcoming-card h3 {
-  font-size: 17px;
-  margin-bottom: 6px;
-}
-
-.upcoming-card p {
-  color: var(--muted);
-  font-size: 13px;
-}
-
-.upcoming-price {
-  margin-left: auto;
-}
-
-.mobile-nav {
-  display: none;
-}
-
-/* ================= DETAILS ================= */
-
-.details-screen,
-.tickets-screen,
-.summary-screen,
-.confirmation-screen,
-.dashboard-screen {
-  display: none;
-  min-height: 100vh;
-  background: var(--bg);
-}
-
-.details-container,
-.tickets-container,
-.summary-container,
-.confirmation-container,
-.dashboard-container {
-  width: min(1100px,90%);
-  margin: auto;
-  padding: 40px 0 80px;
-}
-
-.back-button {
-  border: 0;
-  background: transparent;
-  color: var(--muted);
-  font-size: 14px;
-  margin-bottom: 30px;
-  padding: 0;
-}
-
-.back-button:hover {
-  color: var(--primary);
-  transform: translateX(-3px);
-}
-
-.details-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 55px;
-  align-items: center;
-}
-
-.details-image {
-  height: 570px;
-  border-radius: 24px;
-  background: linear-gradient(145deg,#24154B,#8058D9);
-  position: relative;
-  display: grid;
-  place-items: center;
-  box-shadow: 0 15px 35px rgba(16,24,40,.10);
-}
-
-.details-image-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  color: white;
-  font-size: 90px;
-}
-
-.details-image-content span:last-child {
-  font-size: 14px;
-  font-weight: 800;
-  letter-spacing: 2px;
-}
-
-.details-heart {
-  top: 18px;
-  right: 18px;
-}
-
-.details-badge {
-  position: absolute;
-  top: 18px;
-  left: 18px;
-  background: white;
-  color: var(--text);
-  padding: 7px 10px;
-  border-radius: 999px;
-  font-size: 10px;
-  font-weight: 800;
-}
-
-.details-content h1 {
-  font-size: 44px;
-  line-height: 1.1;
-  letter-spacing: -1.5px;
-  margin: 12px 0 30px;
-}
-
-.details-category {
-  color: var(--primary);
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-}
-
-.event-meta {
-  display: grid;
-  gap: 20px;
-  padding-bottom: 25px;
-  border-bottom: 1px solid var(--border);
-}
-
-.event-meta > div {
-  display: flex;
-  gap: 15px;
-  align-items: flex-start;
-}
-
-.event-meta > div > span {
-  font-size: 24px;
-}
-
-.event-meta strong,
-.event-meta small {
-  display: block;
-}
-
-.event-meta strong {
-  font-size: 15px;
-  margin-bottom: 5px;
-}
-
-.event-meta small {
-  color: var(--muted);
-  font-size: 13px;
-}
-
-.about-event {
-  margin: 27px 0;
-  line-height: 1.7;
-}
-
-.about-event h2 {
-  font-size: 21px;
-  margin-bottom: 10px;
-}
-
-.about-event p {
-  color: var(--muted);
-  font-size: 15px;
-}
-
-.booking-bar {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 15px;
-  padding: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.booking-bar span {
-  display: block;
-  color: var(--muted);
-  font-size: 12px;
-  margin-bottom: 5px;
-}
-
-.booking-bar strong {
-  font-size: 24px;
-}
-
-.book-button,
-.continue-button,
-.pay-button,
-.view-ticket-button,
-.download-ticket-button {
-  border: 0;
-  background: var(--primary);
-  color: white;
-  padding: 13px 20px;
-  border-radius: 9px;
-  font-weight: 700;
-}
-
-.book-button:hover,
-.continue-button:hover,
-.pay-button:hover,
-.view-ticket-button:hover,
-.download-ticket-button:hover {
-  transform: translateY(-2px);
-  background: var(--primary-dark);
-}
-
-/* ================= TICKETS ================= */
-
-.booking-progress {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 5px auto 50px;
-  max-width: 650px;
-}
-
-.progress-step {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #98A2B3;
-  font-size: 13px;
-  font-weight: 700;
-  white-space: nowrap;
-}
-
-.progress-step span {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: #EAECF0;
-}
-
-.progress-step.active {
-  color: var(--primary);
-}
-
-.progress-step.active span {
-  background: var(--primary);
-  color: white;
-}
-
-.progress-line {
-  width: 65px;
-  height: 1px;
-  background: var(--border);
-  margin: 0 12px;
-}
-
-.tickets-header,
-.summary-header {
-  text-align: center;
-  margin-bottom: 35px;
-}
-
-.tickets-header > span,
-.summary-header > span {
-  color: var(--primary);
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 1.4px;
-}
-
-.tickets-header h1,
-.summary-header h1 {
-  font-size: 38px;
-  margin: 9px 0;
-}
-
-.tickets-header p,
-.summary-header p {
-  color: var(--muted);
-}
-
-.ticket-options {
-  max-width: 760px;
-  margin: auto;
-  display: grid;
-  gap: 15px;
-}
-
-.ticket-option {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.ticket-option:hover {
-  border-color: #B8B0F7;
-  box-shadow: 0 8px 20px rgba(16,24,40,.06);
-}
-
-.ticket-info {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.ticket-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  display: grid;
-  place-items: center;
-  background: #F0EEFF;
-  font-size: 23px;
-}
-
-.ticket-info h3 {
-  margin-bottom: 4px;
-}
-
-.ticket-info p {
-  color: var(--muted);
-  font-size: 13px;
-  margin-bottom: 6px;
-}
-
-.quantity-control {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.quantity-control button {
-  width: 34px;
-  height: 34px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: white;
-  font-size: 19px;
-}
-
-.quantity-control button:hover {
-  background: #F0EEFF;
-}
-
-.quantity-control span {
-  min-width: 18px;
-  text-align: center;
-  font-weight: 700;
-}
-
-.ticket-summary {
-  max-width: 760px;
-  margin: 25px auto 0;
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 22px;
-  display: grid;
-  grid-template-columns: 1fr 1fr auto;
-  align-items: center;
-  gap: 20px;
-}
-
-.ticket-summary span {
-  display: block;
-  color: var(--muted);
-  font-size: 12px;
-  margin-bottom: 5px;
-}
-
-/* ================= SUMMARY ================= */
-
-.summary-layout {
-  display: grid;
-  grid-template-columns: 1.2fr .8fr;
-  gap: 25px;
-  align-items: start;
-}
-
-.summary-event-card,
-.order-card {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  box-shadow: 0 8px 25px rgba(16,24,40,.05);
-}
-
-.summary-event-image {
-  height: 250px;
-  border-radius: 18px 18px 0 0;
-  background: linear-gradient(145deg,#24154B,#8058D9);
-  display: grid;
-  place-items: center;
-  color: white;
-  font-size: 70px;
-  position: relative;
-}
-
-.summary-event-image span {
-  position: absolute;
-  bottom: 15px;
-  left: 18px;
-  font-size: 11px;
-  letter-spacing: 1px;
-  font-weight: 800;
-}
-
-.summary-event-info {
-  padding: 25px;
-}
-
-.summary-category {
-  color: var(--primary);
-  font-size: 11px;
-  font-weight: 800;
-}
-
-.summary-event-info h2 {
-  margin: 9px 0 18px;
-  font-size: 25px;
-}
-
-.summary-event-info p {
-  color: var(--muted);
-  font-size: 14px;
-  margin: 10px 0;
-}
-
-.order-card {
-  padding: 25px;
-  position: sticky;
-  top: 90px;
-}
-
-.order-card h2 {
-  margin-bottom: 22px;
-}
-
-.order-item {
-  display: flex;
-  justify-content: space-between;
-  gap: 15px;
-  margin-bottom: 18px;
-}
-
-.order-item-info strong,
-.order-item-info span {
-  display: block;
-}
-
-.order-item-info span {
-  color: var(--muted);
-  font-size: 12px;
-  margin-top: 5px;
-}
-
-.order-divider {
-  height: 1px;
-  background: var(--border);
-  margin: 18px 0;
-}
-
-.price-row,
-.total-row {
-  display: flex;
-  justify-content: space-between;
-  margin: 12px 0;
-}
-
-.price-row {
-  color: var(--muted);
-  font-size: 14px;
-}
-
-.total-row {
-  font-size: 19px;
-  font-weight: 800;
-}
-
-.pay-button {
-  width: 100%;
-  margin-top: 15px;
-}
-
-.secure-note {
-  text-align: center;
-  color: var(--muted);
-  font-size: 11px;
-  margin-top: 15px;
-}
-
-/* ================= CONFIRMATION ================= */
-
-.confirmation-container {
-  text-align: center;
-  padding-top: 70px;
-}
-
-.success-icon {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  background: #E9F9F1;
-  color: var(--success);
-  display: grid;
-  place-items: center;
-  font-size: 34px;
-  font-weight: 800;
-  margin: auto;
-  animation: successPop .45s ease;
-}
-
-@keyframes successPop {
-  0% {
-    transform: scale(.7);
-    opacity: 0;
-  }
-  70% {
-    transform: scale(1.08);
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-.confirmation-label {
-  display: block;
-  color: var(--success);
-  margin-top: 20px;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 1.4px;
-}
-
-.confirmation-container > h1 {
-  font-size: 40px;
-  margin: 10px 0;
-}
-
-.confirmation-subtitle {
-  color: var(--muted);
-}
-
-.ticket-card {
-  width: min(760px,100%);
-  margin: 35px auto 25px;
-  background: white;
-  border-radius: 20px;
-  border: 1px solid var(--border);
-  text-align: left;
-  overflow: hidden;
-  box-shadow: 0 15px 35px rgba(16,24,40,.08);
-}
-
-.ticket-card-top {
-  padding: 25px;
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-.ticket-category {
-  color: var(--primary);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 1px;
-}
-
-.ticket-card h2 {
-  margin-top: 8px;
-  font-size: 25px;
-}
-
-.ticket-status {
-  height: fit-content;
-  color: var(--success);
-  background: #E9F9F1;
-  border-radius: 999px;
-  padding: 7px 10px;
-  font-size: 10px;
-  font-weight: 800;
-}
-
-.ticket-event-details {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 20px;
-  padding: 20px 25px;
-  background: #FAFAFC;
-}
-
-.ticket-event-details span,
-.ticket-booking-info span {
-  display: block;
-  color: #98A2B3;
-  font-size: 10px;
-  letter-spacing: 1px;
-  font-weight: 800;
-  margin-bottom: 6px;
-}
-
-.ticket-event-details strong {
-  font-size: 13px;
-}
-
-.ticket-divider {
-  border-top: 1px dashed #D0D5DD;
-  margin: 0 25px;
-}
-
-.ticket-bottom {
-  padding: 22px 25px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.ticket-booking-info {
-  display: grid;
-  grid-template-columns: auto auto;
-  column-gap: 15px;
-  row-gap: 8px;
-}
-
-.ticket-booking-info span {
-  margin: 0;
-}
-
-.ticket-booking-info strong {
-  font-size: 12px;
-}
-
-.qr-container {
-  text-align: center;
-}
-
-.qr-code {
-  width: 105px;
-  height: 105px;
-  background:
-    linear-gradient(90deg,#111 10px,transparent 10px) 0 0/20px 20px,
-    linear-gradient(#111 10px,transparent 10px) 0 0/20px 20px,
-    white;
-  border: 7px solid white;
-  outline: 1px solid #D0D5DD;
-}
-
-.qr-container > span {
-  display: block;
-  color: var(--muted);
-  font-size: 10px;
-  margin-top: 7px;
-}
-
-.confirmation-actions {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-}
-
-.home-button {
-  padding: 13px 20px;
-  border: 1px solid var(--border);
-  border-radius: 9px;
-  background: white;
-  font-weight: 700;
-}
-
-/* ================= DASHBOARD ================= */
-
-.dashboard-navbar {
-  height: 74px;
-  padding: 0 6%;
-  background: white;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: 0 1px 3px rgba(16,24,40,.04);
-}
-
-.dashboard-home-btn {
-  border: 0;
-  background: transparent;
-  color: var(--muted);
-  font-weight: 700;
-}
-
-.dashboard-heading {
-  margin-bottom: 30px;
-}
-
-.dashboard-heading > span,
-.dashboard-section-heading span {
-  color: var(--primary);
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 1.4px;
-}
-
-.dashboard-heading h1 {
-  font-size: 40px;
-  margin: 8px 0;
-}
-
-.dashboard-heading p {
-  color: var(--muted);
-}
-
-.dashboard-stats {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 18px;
-  margin-bottom: 45px;
-}
-
-.stat-card {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 22px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.stat-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(16,24,40,.07);
-}
-
-.stat-card > span {
-  font-size: 28px;
-  width: 50px;
-  height: 50px;
-  display: grid;
-  place-items: center;
-  border-radius: 12px;
-  background: #F0EEFF;
-}
-
-.stat-card strong {
-  font-size: 26px;
-}
-
-.stat-card p {
-  color: var(--muted);
-  font-size: 13px;
-  margin-top: 3px;
-}
-
-.dashboard-section {
-  margin-top: 40px;
-}
-
-.dashboard-section-heading {
-  margin-bottom: 22px;
-}
-
-.dashboard-section-heading h2 {
-  margin-top: 7px;
-  font-size: 27px;
-}
-
-.dashboard-event-card {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  overflow: hidden;
-  display: grid;
-  grid-template-columns: 280px 1fr;
-  box-shadow: 0 10px 28px rgba(16,24,40,.06);
-}
-
-.dashboard-event-image {
-  min-height: 300px;
-  background: linear-gradient(145deg,#24154B,#8058D9);
-  display: grid;
-  place-items: center;
-  color: white;
-  font-size: 65px;
-  position: relative;
-}
-
-.dashboard-event-image span {
-  position: absolute;
-  bottom: 15px;
-  left: 18px;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 1px;
-}
-
-.dashboard-event-info {
-  padding: 30px;
-}
-
-.dashboard-date {
-  color: var(--primary);
-  font-size: 11px;
-  font-weight: 800;
-}
-
-.dashboard-event-info h2 {
-  margin: 8px 0 13px;
-}
-
-.dashboard-event-info > p {
-  color: var(--muted);
-  font-size: 13px;
-  margin: 8px 0;
-}
-
-.dashboard-ticket-info {
-  display: flex;
-  gap: 45px;
-  margin: 25px 0;
-}
-
-.dashboard-ticket-info span,
-.dashboard-ticket-info strong {
-  display: block;
-}
-
-.dashboard-ticket-info span {
-  color: #98A2B3;
-  font-size: 9px;
-  font-weight: 800;
-  margin-bottom: 5px;
-}
-
-.dashboard-ticket-info strong {
-  font-size: 12px;
-}
-
-.favorite-dashboard-card,
-.history-card {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.favorite-placeholder,
-.history-icon {
-  width: 50px;
-  height: 50px;
-  border-radius: 12px;
-  background: #F0EEFF;
-  display: grid;
-  place-items: center;
-  color: var(--primary);
-  font-size: 25px;
-  flex-shrink: 0;
-}
-
-.favorite-dashboard-card h3,
-.history-card h3 {
-  font-size: 16px;
-  margin-bottom: 5px;
-}
-
-.favorite-dashboard-card p,
-.history-card p {
-  color: var(--muted);
-  font-size: 13px;
-}
-
-.history-status {
-  margin-left: auto;
-  color: var(--success);
-  background: #E9F9F1;
-  padding: 7px 10px;
-  border-radius: 999px;
-  font-size: 10px;
-  font-weight: 800;
-}
-
-/* ================= RESPONSIVE ================= */
-
-@media (max-width: 850px) {
-
-  .welcome {
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    padding: 45px 6%;
-  }
-
-  .welcome p {
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .visual-card {
-    width: min(520px,100%);
-    min-height: 380px;
-  }
-
-  .navbar nav {
-    display: none;
-  }
-
-  .hero {
-    padding: 40px;
-    min-height: 470px;
-  }
-
-  .hero-content {
-    width: 100%;
-  }
-
-  .hero-decoration {
-    display: none;
-  }
-
-  .categories {
-    grid-template-columns: repeat(3,1fr);
-  }
-
-  .event-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .details-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .details-image {
-    height: 400px;
-  }
-
-  .summary-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .order-card {
-    position: static;
-  }
-
-  .dashboard-event-card {
-    grid-template-columns: 1fr;
-  }
-
-  .dashboard-event-image {
-    min-height: 230px;
-  }
-
-  .dashboard-stats {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 600px) {
-
-  .welcome h1 {
-    font-size: 40px;
-  }
-
-  .visual-card {
-    min-height: 300px;
-  }
-
-  .login-card {
-    padding: 30px 23px;
-  }
-
-  .home-container,
-  .details-container,
-  .tickets-container,
-  .summary-container,
-  .confirmation-container,
-  .dashboard-container {
-    width: 92%;
-    padding-top: 25px;
-  }
-
-  .hero {
-    padding: 30px 23px;
-    border-radius: 20px;
-  }
-
-  .hero h1 {
-    font-size: 38px;
-  }
-
-  .categories {
-    grid-template-columns: repeat(2,1fr);
-  }
-
-  .event-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .section-heading h2,
-  .dashboard-section-heading h2 {
-    font-size: 23px;
-  }
-
-  .upcoming-card {
-    align-items: flex-start;
-  }
-
-  .upcoming-price {
-    display: none;
-  }
-
-  .details-content h1 {
-    font-size: 36px;
-  }
-
-  .details-image {
-    height: 330px;
-  }
-
-  .booking-bar {
-    position: sticky;
-    bottom: 10px;
-    z-index: 10;
-  }
-
-  .booking-progress {
-    justify-content: flex-start;
-    overflow-x: auto;
-    padding-bottom: 5px;
-  }
-
-  .progress-line {
-    width: 30px;
-    margin: 0 7px;
-  }
-
-  .tickets-header h1,
-  .summary-header h1 {
-    font-size: 31px;
-  }
-
-  .ticket-option {
-    align-items: flex-start;
-    gap: 15px;
-  }
-
-  .ticket-summary {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .ticket-summary .continue-button {
-    grid-column: 1 / -1;
-    width: 100%;
-  }
-
-  .ticket-event-details {
-    grid-template-columns: 1fr;
-  }
-
-  .ticket-card-top,
-  .ticket-bottom {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .qr-container {
-    align-self: center;
-  }
-
-  .confirmation-actions {
-    flex-direction: column;
-  }
-
-  .confirmation-actions button {
-    width: 100%;
-  }
-
-  .dashboard-heading h1 {
-    font-size: 34px;
-  }
-
-  .dashboard-ticket-info {
-    gap: 25px;
-    flex-wrap: wrap;
-  }
-
-  .history-status {
-    display: none;
-  }
-
-  .mobile-nav {
-    position: fixed;
-    display: flex;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 66px;
-    background: white;
-    border-top: 1px solid var(--border);
-    z-index: 50;
-    justify-content: space-around;
-  }
-
-  .mobile-nav a {
-    text-decoration: none;
-    color: var(--muted);
-    font-size: 21px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 2px;
-  }
-
-  .mobile-nav a span {
-    font-size: 10px;
-    font-weight: 700;
-  }
-
-  .mobile-nav a.active {
-    color: var(--primary);
-  }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eventra - Event Management Platform</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #F8F9FC;
+      color: #101828;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    /* =========================
+       WELCOME
+    ========================== */
+
+    .welcome {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 60px;
+      padding: 60px 8%;
+      background: #F8F9FC;
+    }
+
+    .welcome-content {
+      max-width: 580px;
+    }
+
+    .brand-logo {
+      color: #6C5CE7;
+      font-size: 30px;
+      font-weight: 800;
+      margin-bottom: 45px;
+    }
+
+    .welcome-content h1 {
+      font-size: clamp(42px, 5vw, 68px);
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 25px;
+    }
+
+    .welcome-content h1 span {
+      color: #6C5CE7;
+    }
+
+    .welcome-content p {
+      color: #667085;
+      font-size: 18px;
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+
+    .primary-button {
+      background: #6C5CE7;
+      color: white;
+      padding: 16px 26px;
+      border-radius: 10px;
+      font-weight: 700;
+      transition: .2s;
+    }
+
+    .primary-button:hover {
+      background: #5548C8;
+      transform: translateY(-2px);
+    }
+
+    .welcome-visual {
+      width: 430px;
+      height: 500px;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .visual-card {
+      width: 100%;
+      height: 100%;
+      border-radius: 32px;
+      background: linear-gradient(145deg, #6C5CE7, #9588F3);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 30px 70px rgba(108,92,231,.25);
+    }
+
+    .visual-title {
+      position: absolute;
+      top: 35px;
+      left: 35px;
+      color: white;
+      font-size: 28px;
+      font-weight: 800;
+    }
+
+    .visual-subtitle {
+      position: absolute;
+      top: 76px;
+      left: 35px;
+      color: rgba(255,255,255,.75);
+      font-size: 14px;
+    }
+
+    .visual-circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,.10);
+    }
+
+    .visual-circle.one {
+      width: 250px;
+      height: 250px;
+      top: -70px;
+      right: -60px;
+    }
+
+    .visual-circle.two {
+      width: 200px;
+      height: 200px;
+      bottom: -80px;
+      left: -70px;
+    }
+
+    .floating-event {
+      position: absolute;
+      width: 285px;
+      background: white;
+      padding: 20px;
+      border-radius: 17px;
+      box-shadow: 0 15px 35px rgba(16,24,40,.18);
+    }
+
+    .floating-event.music {
+      top: 150px;
+      left: 35px;
+    }
+
+    .floating-event.tech {
+      top: 305px;
+      left: 105px;
+    }
+
+    .floating-event span {
+      color: #6C5CE7;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .floating-event h3 {
+      margin: 7px 0;
+    }
+
+    .floating-event p {
+      color: #667085;
+      font-size: 13px;
+    }
+
+    /* =========================
+       AUTH
+    ========================== */
+
+    .auth-screen {
+      min-height: 100vh;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 25px;
+      background: #F8F9FC;
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 440px;
+      background: white;
+      padding: 42px;
+      border-radius: 22px;
+      border: 1px solid #E4E7EC;
+      box-shadow: 0 20px 55px rgba(16,24,40,.08);
+    }
+
+    .auth-logo {
+      color: #6C5CE7;
+      font-size: 28px;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .auth-card h2 {
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+
+    .auth-subtitle {
+      color: #667085;
+      margin-bottom: 27px;
+      line-height: 1.5;
+    }
+
+    .form-group {
+      margin-bottom: 17px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid #D0D5DD;
+      border-radius: 10px;
+      outline: none;
+    }
+
+    .form-input:focus {
+      border-color: #6C5CE7;
+      box-shadow: 0 0 0 4px rgba(108,92,231,.08);
+    }
+
+    .password-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .password-row a,
+    .auth-link {
+      color: #6C5CE7;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .auth-button {
+      width: 100%;
+      padding: 14px;
+      background: #6C5CE7;
+      color: white;
+      border-radius: 10px;
+      font-weight: 700;
+      transition: .2s;
+    }
+
+    .auth-button:hover {
+      background: #5548C8;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px rgba(108,92,231,.22);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #98A2B3;
+      font-size: 12px;
+      margin: 25px 0;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      height: 1px;
+      background: #E4E7EC;
+      flex: 1;
+    }
+
+    .google-button {
+      width: 100%;
+      padding: 13px;
+      background: white;
+      border: 1px solid #D0D5DD;
+      border-radius: 10px;
+      font-weight: 700;
+    }
+
+    .google-icon {
+      color: #6C5CE7;
+      font-weight: 800;
+      margin-right: 7px;
+    }
+
+    .auth-footer {
+      text-align: center;
+      color: #667085;
+      font-size: 14px;
+      margin-top: 23px;
+    }
+
+    /* =========================
+       NAVBAR
+    ========================== */
+
+    .navbar,
+    .dashboard-navbar {
+      height: 72px;
+      padding: 0 6%;
+      background: white;
+      border-bottom: 1px solid #E4E7EC;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      color: #6C5CE7;
+      font-size: 25px;
+      font-weight: 800;
+    }
+
+    .navbar nav {
+      display: flex;
+      gap: 30px;
+    }
+
+    .navbar nav a {
+      text-decoration: none;
+      color: #667085;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .navbar nav a:hover,
+    .navbar nav a.active {
+      color: #6C5CE7;
+    }
+
+    .profile-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #EFEAFF;
+      color: #6C5CE7;
+      font-weight: 800;
+    }
+
+    /* =========================
+       HOME
+    ========================== */
+
+    .home-screen {
+      display: none;
+      min-height: 100vh;
+    }
+
+    .home-container {
+      max-width: 1250px;
+      margin: auto;
+      padding: 45px 30px 90px;
+    }
+
+    .hero {
+      min-height: 430px;
+      padding: 60px;
+      border-radius: 26px;
+      background: linear-gradient(120deg, #6253D8, #8D7EF2);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      box-shadow: 0 12px 35px rgba(16,24,40,.08);
+    }
+
+    .hero-content {
+      max-width: 650px;
+    }
+
+    .hero-label,
+    .small-label {
+      font-size: 11px;
+      letter-spacing: 1.4px;
+      font-weight: 800;
+    }
+
+    .hero-label {
+      color: rgba(255,255,255,.75);
+    }
+
+    .hero h1 {
+      font-size: clamp(40px, 5vw, 60px);
+      line-height: 1.08;
+      margin: 17px 0;
+    }
+
+    .hero h1 span {
+      color: white;
+    }
+
+    .hero p {
+      color: rgba(255,255,255,.82);
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+
+    .search-box {
+      width: min(520px,100%);
+      background: white;
+      border-radius: 12px;
+      padding: 4px 15px;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-box input {
+      flex: 1;
+      border: none;
+      outline: none;
+      padding: 13px 10px;
+    }
+
+    .hero-decoration {
+      width: 280px;
+      height: 280px;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .hero-circle {
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.12);
+      position: absolute;
+      right: 30px;
+      top: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 65px;
+    }
+
+    .floating-card {
+      position: absolute;
+      z-index: 2;
+      background: white;
+      color: #101828;
+      padding: 14px 17px;
+      border-radius: 13px;
+      box-shadow: 0 12px 25px rgba(16,24,40,.16);
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .card-one {
+      top: 30px;
+      left: 0;
+    }
+
+    .card-two {
+      right: 0;
+      bottom: 25px;
+    }
+
+    .section {
+      margin-top: 55px;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      margin-bottom: 22px;
+    }
+
+    .small-label {
+      color: #6C5CE7;
+    }
+
+    .section-heading h2 {
+      font-size: 27px;
+      margin-top: 5px;
+    }
+
+    .section-heading a {
+      color: #6C5CE7;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(5,1fr);
+      gap: 16px;
+    }
+
+    .category {
+      background: white;
+      border: 1px solid #E4E7EC;
+      border-radius: 16px;
+      padding: 23px 15px;
+      text-align: center;
+      transition: .2s;
+    }
+
+    .category:hover {
+      transform: translateY(-4px);
+      border-color: #6C5CE7;
+      box-shadow: 0 10px 24px rgba(16,24,40,.08);
+    }
+
+    .category span {
+      display: block;
+      font-size: 29px;
+      margin-bottom: 12px;
+    }
+
+    .event-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 22px;
+    }
+
+    .home-event-card {
+      background: white;
+      border: 1px solid #E4E7EC;
+      border-radius: 18px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .home-event-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 14px 30px rgba(16,24,40,.09);
+    }
+
+    .event-image {
+      height: 190px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 60px;
+    }
+
+    .music-image {
+      background: linear-gradient(135deg,#DAD4FF,#A99BF7);
+    }
+
+    .tech-image {
+      background: linear-gradient(135deg,#D4EAFE,#8DBDF4);
+    }
+
+    .workshop-image {
+      background: linear-gradient(135deg,#FFE2C7,#F5B77C);
+    }
+
+    .event-badge {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: white;
+      padding: 7px 10px;
+      border-radius: 999px;
+      color: #6C5CE7;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .heart-btn {
+      position: absolute;
+      top: 13px;
+      right: 13px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: white;
+      color: #667085;
+      font-size: 19px;
+    }
+
+    .heart-btn.favorited {
+      color: #E5484D;
+    }
+
+    .event-info {
+      padding: 20px;
+    }
+
+    .event-date {
+      color: #6C5CE7;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .event-info h3 {
+      font-size: 18px;
+      margin: 9px 0;
+    }
+
+    .event-info p {
+      color: #667085;
+      font-size: 13px;
+      margin-bottom: 17px;
+    }
+
+    .event-bottom {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+    }
+
+    .event-bottom span {
+      color: #667085;
+    }
+
+    .upcoming-list {
+      display: grid;
+      gap: 13px;
+    }
+
+    .upcoming-card {
+      background: white;
+      border: 1px solid #E4E7EC;
+      border-radius: 15px;
+      padding: 18px 20px;
+      display: grid;
+      grid-template-columns: 70px 1fr auto;
+      align-items: center;
+      gap: 20px;
+      cursor: pointer;
+    }
+
+    .upcoming-date {
+      width: 60px;
+      height: 60px;
+      border-radius: 12px;
+      background: #F0EEFF;
+      color: #6C5CE7;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .upcoming-date strong {
+      font-size: 22px;
+    }
+
+    .upcoming-date span {
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .upcoming-card p {
+      color: #667085;
+      font-size: 13px;
+      margin-top: 6px;
+    }
+
+    .upcoming-price {
+      color: #6C5CE7;
+    }
+
+    .mobile-nav {
+      display: none;
+    }
+
+    /* =========================
+       GENERAL INNER SCREENS
+    ========================== */
+
+    .details-screen,
+    .tickets-screen,
+    .summary-screen,
+    .confirmation-screen,
+    .dashboard-screen {
+      display: none;
+      min-height: 100vh;
+    }
+
+    .details-container,
+    .tickets-container,
+    .summary-container,
+    .confirmation-container,
+    .dashboard-container {
+      max-width: 1120px;
+      margin: auto;
+      padding: 40px 30px 80px;
+    }
+
+    .back-button {
+      background: transparent;
+      color: #667085;
+      font-weight: 700;
+      margin-bottom: 30px;
+    }
+
+    .details-layout {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    .details-image {
+      min-height: 550px;
+      border-radius: 25px;
+      background: linear-gradient(145deg,#6C5CE7,#9B8EF4);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .details-badge {
+      position: absolute;
+      top: 22px;
+      left: 22px;
+      background: white;
+      color: #6C5CE7;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .details-heart {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 43px;
+      height: 43px;
+      border-radius: 50%;
+      background: white;
+      font-size: 21px;
+      color: #667085;
+    }
+
+    .details-heart.favorited {
+      color: #E5484D;
+    }
+
+    .details-image-content {
+      color: white;
+      font-size: 95px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .details-image-content span {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    .details-category,
+    .summary-category {
+      color: #6C5CE7;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .details-content h1 {
+      font-size: 50px;
+      line-height: 1.08;
+      margin: 12px 0 30px;
+    }
+
+    .event-meta {
+      display: grid;
+      gap: 18px;
+      margin-bottom: 35px;
+    }
+
+    .event-meta > div {
+      display: flex;
+      gap: 14px;
+    }
+
+    .event-meta strong,
+    .event-meta small {
+      display: block;
+    }
+
+    .event-meta small {
+      color: #667085;
+      margin-top: 5px;
+    }
+
+    .about-event {
+      color: #667085;
+      line-height: 1.7;
+      margin-bottom: 35px;
+    }
+
+    .about-event h2 {
+      color: #101828;
+      margin-bottom: 10px;
+      font-size: 22px;
+    }
+
+    .booking-bar {
+      background: white;
+      border: 1px solid #E4E7EC;
+      border-radius: 16px;
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .booking-bar span {
+      display: block;
+      color: #667085;
+      font-size: 12px;
+    }
+
+    .booking-bar strong {
+      display: block;
+      font-size: 24px;
+      margin-top: 3px;
+    }
+
+    .book-button,
+    .continue-button,
+    .pay-button,
+    .view-ticket-button,
+    .download-ticket-button {
+      background: #6C5CE7;
+      color: white;
+      padding: 13px 20px;
+      border-radius: 9px;
+      font-weight: 700;
+    }
+
+    /* =========================
+       TICKETS
+    ========================== */
+
+    .booking-progress {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 55px;
+    }
+
+    .progress-step {
+      color: #98A2B3;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .progress-step span {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #EAECF0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .progress-step.active {
+      color: #6C5CE7;
+    }
+
+    .progress-step.active span {
+      color: white;
+      background: #6C5CE7;
+    }
+
+    .progress-line {
+      width: 65px;
+      height: 1px;
+      background: #E4E7EC;
+    }
+
+    .tickets-header,
+    .summary-header {
+      margin-bottom: 35px;
+    }
+
+    .tickets-header,
+    .confirmation-container {
+      text-align: center;
+    }
+
+    .tickets-header > span,
+    .summary-header > span,
+    .dashboard-heading > span {
+      color: #6C5CE7;
+      font-size: 11px;
+      letter-spacing: 1.3px;
+      font-weight: 800;
+    }
+
+    .tickets-header h1,
+    .summary-header h1,
+    .dashboard-heading h1 {
+      font-size: 40px;
+      margin: 9px 0;
+    }
+
+    .tickets-header p,
+    .summary-header p,
+    .dashboard-heading p {
+      color: #667085;
+    }
+
+    .ticket-options {
+      max-width: 780px;
+      margin: auto;
+      display: grid;
+      gap: 14px;
+    }
+
+    .ticket-option {
+      background: white;
+      border: 1px solid #E4E7EC;
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .ticket-info {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .ticket-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 13px;
+      background: #F0EEFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 23px;
+    }
+
+    .ticket-info h3 {
+      font-size: 17px;
+      margin-bottom: 4px;
+    }
+
+    .ticket-info p {
+      color: #667085;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    .ticket-info strong {
+      color: #6C5CE7;
+    }
+
+    .quantity-control {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+
+    .quantity-control button {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background: #F0EEFF;
+      color: #6C5CE7;
+      font-size: 19px;
+      font-weight: 700;
+    }
+
+    .quantity-control span {
+      min-width: 20px;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .ticket-summary {
+      max-width: 780px;
+      margin: 25px auto 0;
+      padding: 22px;
+      background: white;
+      border: 1px solid #E4E7EC;
+      border-radius: 16px;
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .ticket-summary span {
+      color: #667085;
+      font-size: 12px;
+    }
+
+    .ticket-summary strong {
+      display: block;
+      margin-top: 4px;
+    }
+
+    /* =========================
+       SUMMARY
+    ========================== */
+
+    .summary-layout {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 25px;
+      align-items: start;
+    }
+
+    .summary-event-card,
+    .order-card {
+      background: white;
+      border: 1px solid #E4E7EC;
+      border-radius: 18px;
+    }
+
+    .summary-event-card {
+      overflow: hidden;
+    }
+
+    .summary-event-image {
+      height: 220px;
+      background: linear-gradient(135deg,#6C5CE7,#9B8EF4);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 70px;
+    }
+
+    .summary-event-image span {
+      font-size: 12px;
+      letter-spacing: 2px;
+      font-weight: 800;
+    }
+
+    .summary-event-info {
+      padding: 25px;
+    }
+
+    .summary-event-info h2 {
+      font-size: 25px;
+      margin: 9px 0 18px;
+    }
+
+    .summary-event-info p {
+      color: #667085;
+      margin: 9px 0;
+      font-size: 14px;
+    }
+
+    .order-card {
+      padding: 25px;
+      position: sticky;
+      top: 90px;
+    }
+
+    .order-card h2 {
+      margin-bottom: 20px;
+    }
+
+    .order-item {
+      display: flex;
+      justify-content: space-between;
+      margin: 15px 0;
+    }
+
+    .order-item-info strong,
+    .order-item-info span {
+      display: block;
+    }
+
+    .order-item-info span {
+      color: #667085;
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    .order-divider {
+      height: 1px;
+      background: #E4E7EC;
+      margin: 20px 0;
+    }
+
+    .price-row,
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      margin: 12px 0;
+    }
+
+    .price-row {
+      color: #667085;
+      font-size: 14px;
+    }
+
+    .total-row {
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .pay-button {
+      width: 100%;
+      margin-top: 15px;
+    }
+
+    .secure-note {
+      text-align: center;
+      color: #98A2B3;
+      font-size: 11px;
+      margin-top: 13px;
+    }
+
+    /* =========================
+       CONFIRMATION
+    ========================== */
+
+    .confirmation-container {
+      max-width: 850px;
+    }
+
+    .success-icon {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: #12B76A;
+      color: white;
+      font-size: 35px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 20px auto;
+    }
+
+    .confirmation-label {
+      color: #12B76A;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      font-weight: 800;
+    }
+
+    .confirmation-container > h1 {
+      font-size: 44px;
+      margin: 10px 0;
+    }
+
+    .confirmation-subtitle {
+      color: #667085;
+      margin-bottom: 35px;
+    }
+
+    .ticket-card {
+      text-align: left;
+      background: white;
+      border: 1px solid #E4E7EC;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .ticket-card-top {
+      padding: 27px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .ticket-category {
+      color: #6C5CE7;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .ticket-card-top h2 {
+      font-size: 25px;
+      margin-top: 8px;
+    }
+
+    .ticket-status {
+      color: #12B76A;
+      background: #ECFDF3;
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 800;
+      height: fit-content;
+    }
+
+    .ticket-event-details {
+      padding: 0 27px 25px;
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 20px;
+    }
+
+    .ticket-event-details span,
+    .ticket-booking-info span {
+      display: block;
+      color: #98A2B3;
+      font-size: 9px;
+      font-weight: 800;
+      margin-bottom: 5px;
+    }
+
+    .ticket-event-details strong {
+      font-size: 13px;
+    }
+
+    .ticket-divider {
+      border-top: 1px dashed #D0D5DD;
+    }
+
+    .ticket-bottom {
+      padding: 25px 27px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .ticket-booking-info {
+      display: flex;
+      gap: 35px;
+    }
+
+    .ticket-booking-info strong {
+      font-size: 12px;
+    }
+
+    .qr-container {
+      text-align: center;
+    }
+
+    .qr-code {
+      width: 105px;
+      height: 105px;
+      background:
+        linear-gradient(90deg,#111 10px,transparent 10px) 0 0/25px 25px,
+        linear-gradient(#111 10px,transparent 10px) 0 0/25px 25px,
+        linear-gradient(90deg,transparent 12px,#111 12px 18px,transparent 18px) 0 0/21px 21px,
+        linear-gradient(transparent 12px,#111 12px 18px,transparent 18px) 0 0/21px 21px,
+        white;
+      border: 6px solid white;
+      box-shadow: 0 0 0 1px #D0D5DD;
+    }
+
+    .qr-container span {
+      color: #98A2B3;
+      font-size: 10px;
+    }
+
+    .confirmation-actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 25px;
+    }
+
+    .home-button {
+      background: white;
+      color: #6C5CE7;
+      border: 1px solid #D0D5DD;
+      padding: 13px 20px;
+      border-radius: 9px;
+      font-weight: 700;
+    }
+
+    /* =========================
+       DASHBOARD
+    ========================== */
+
+    .dashboard-home-btn {
+      background: #F0EEFF;
+      color: #6C5CE7;
+      border-radius: 9px;
+      padding: 10px 15px;
+      font-weight: 700;
+    }
+
+    .dashboard-heading {
+      margin-bottom: 35px;
+    }
+
+    .dashboard-stats {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 18px;
+      margin-bottom: 50px;
+    }
+
+    .stat-card {
+      background: white;
+      border: 1px solid #E4E7EC;
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .stat-card > span {
+      width: 47px;
+      height: 47px;
+      border-radius: 12px;
+      background: #F0EEFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 21px;
+    }
+
+    .stat-card strong {
+      font-size: 24px;
+    }
+
+    .stat-card p {
+      color: #667085;
+      font-size: 12px;
+      margin-top: 3px;
+    }
+
+    .dashboard-section {
+      margin-bottom: 48px;
+    }
+
+    .dashboard-section-heading {
+      margin-bottom: 22px;
+    }
+
+    .dashboard-section-heading span {
+      color: #6C5CE7;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+    }
+
+    .dashboard-section-heading h2 {
+      font-size: 27px;
+      margin-top: 5px;
+    }
+
+    .dashboard-event-card {
+      background: white;
+      border: 1px solid #E4E7EC;
+      border-radius: 18px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 300px 1fr;
+    }
+
+    .dashboard-event-image {
+      min-height: 300px;
+      background: linear-gradient(135deg,#6C5CE7,#9B8EF4);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 65px;
+    }
+
+    .dashboard-event-image span {
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      font-weight: 800;
+    }
+
+    .dashboard-event-info {
+      padding: 32px;
+    }
+
+    .dashboard-date {
+      color: #6C5CE7;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .dashboard-event-info h2 {
+      font-size: 28px;
+      margin: 8px 0 13px;
+    }
+
+    .dashboard-event-info > p {
+      color: #667085;
+      font-size: 14px;
+      margin: 8px 0;
+    }
+
+    .dashboard-ticket-info {
+      display: flex;
+      gap: 50px;
+      margin: 25px 0;
+    }
+
+    .dashboard-ticket-info span,
+    .dashboard-ticket-info strong {
+      display: block;
+    }
+
+    .dashboard-ticket-info span {
+      color: #98A2B3;
+      font-size: 9px;
+      font-weight: 800;
+      margin-bottom: 5px;
+    }
+
+    .dashboard-ticket-info strong {
+      font-size: 12px;
+    }
+
+    .favorite-dashboard-card,
+    .history-card {
+      background: white;
+      border: 1px solid #E4E7EC;
+      border-radius: 15px;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      gap: 17px;
+    }
+
+    .favorite-placeholder,
+    .history-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      background: #F0EEFF;
+      color: #6C5CE7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .favorite-dashboard-card h3,
+    .history-card h3 {
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+
+    .favorite-dashboard-card p,
+    .history-card p {
+      color: #667085;
+      font-size: 13px;
+    }
+
+    .favorite-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .history-status {
+      margin-left: auto;
+      color: #12B76A;
+      background: #ECFDF3;
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================== */
+
+    @media (max-width: 900px) {
+
+      .welcome {
+        padding: 45px 6%;
+      }
+
+      .hero {
+        padding: 45px;
+      }
+
+      .hero-decoration {
+        display: none;
+      }
+
+      .categories {
+        grid-template-columns: repeat(3,1fr);
+      }
+
+      .event-grid {
+        grid-template-columns: repeat(2,1fr);
+      }
+
+      .details-layout,
+      .summary-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .details-image {
+        min-height: 400px;
+      }
+
+      .order-card {
+        position: static;
+      }
+
+      .dashboard-event-card {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 650px) {
+
+      .welcome {
+        padding: 35px 22px 60px;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .welcome-content h1 {
+        font-size: 43px;
+      }
+
+      .welcome-visual {
+        width: 100%;
+        height: 390px;
+      }
+
+      .visual-card {
+        max-width: 380px;
+        height: 390px;
+        margin: auto;
+      }
+
+      .floating-event {
+        width: 230px;
+      }
+
+      .floating-event.music {
+        top: 120px;
+      }
+
+      .floating-event.tech {
+        top: 230px;
+        left: 75px;
+      }
+
+      .navbar {
+        padding: 0 20px;
+      }
+
+      .navbar nav {
+        display: none;
+      }
+
+      .home-container {
+        padding: 25px 18px 90px;
+      }
+
+      .hero {
+        padding: 35px 25px;
+      }
+
+      .hero h1 {
+        font-size: 41px;
+      }
+
+      .categories {
+        grid-template-columns: repeat(2,1fr);
+      }
+
+      .event-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .upcoming-card {
+        grid-template-columns: 58px 1fr;
+      }
+
+      .upcoming-price {
+        grid-column: 2;
+      }
+
+      .mobile-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 66px;
+        background: white;
+        border-top: 1px solid #E4E7EC;
+        display: grid;
+        grid-template-columns: repeat(4,1fr);
+        z-index: 50;
+      }
+
+      .mobile-nav a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        color: #98A2B3;
+        font-size: 19px;
+        cursor: pointer;
+      }
+
+      .mobile-nav a span {
+        font-size: 10px;
+        font-weight: 700;
+      }
+
+      .mobile-nav a.active {
+        color: #6C5CE7;
+      }
+
+      .auth-card {
+        padding: 30px 23px;
+      }
+
+      .details-container,
+      .tickets-container,
+      .summary-container,
+      .confirmation-container,
+      .dashboard-container {
+        padding: 25px 18px 90px;
+      }
+
+      .details-image {
+        min-height: 330px;
+      }
+
+      .details-content h1 {
+        font-size: 38px;
+      }
+
+      .booking-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+      }
+
+      .book-button {
+        width: 100%;
+      }
+
+      .booking-progress {
+        gap: 6px;
+      }
+
+      .progress-line {
+        width: 25px;
+      }
+
+      .progress-step {
+        font-size: 11px;
+      }
+
+      .ticket-option {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .ticket-summary {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .ticket-summary .continue-button {
+        grid-column: 1/-1;
+        width: 100%;
+      }
+
+      .ticket-event-details {
+        grid-template-columns: 1fr;
+      }
+
+      .ticket-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 25px;
+      }
+
+      .confirmation-container > h1 {
+        font-size: 37px;
+      }
+
+      .confirmation-actions {
+        flex-direction: column;
+      }
+
+      .confirmation-actions button {
+        width: 100%;
+      }
+
+      .dashboard-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .dashboard-event-info {
+        padding: 23px;
+      }
+
+      .dashboard-ticket-info {
+        gap: 25px;
+        flex-wrap: wrap;
+      }
+
+      .history-status {
+        display: none;
+      }
+    }
+
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+
+      .confirmation-screen,
+      .confirmation-screen * {
+        visibility: visible;
+      }
+
+      .confirmation-screen {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+      }
+
+      .confirmation-actions {
+        display: none;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- =====================================================
-     SCREEN 1 - WELCOME
-===================================================== -->
+  <!-- =========================
+       1. WELCOME
+  ========================== -->
 
-<section class="welcome screen" id="welcomeScreen">
+  <section class="welcome" id="welcomeScreen">
 
-  <div class="welcome-content">
+    <div class="welcome-content">
 
-    <div class="logo">Eventra</div>
+      <div class="brand-logo">
+        Eventra
+      </div>
 
-    <h1>
-      Discover.<br>
-      Experience.<br>
-      <span>Remember.</span>
-    </h1>
+      <h1>
+        Discover.<br>
+        Experience.<br>
+        <span>Remember.</span>
+      </h1>
 
-    <p>
-      Find concerts, workshops, sports, festivals and exciting experiences.
-      Discover events you'll love and book your next experience with ease.
-    </p>
-
-    <button class="primary-button" onclick="startEventra()">
-      Get Started →
-    </button>
-
-  </div>
-
-  <div class="visual-card">
-
-    <div class="visual-circle circle-one"></div>
-    <div class="visual-circle circle-two"></div>
-
-    <div class="visual-ticket">
-
-      <div class="ticket-icon-big">🎟️</div>
-
-      <h3>Live Music Night</h3>
-
-      <p>Saturday · 18 October 2026</p>
-
-      <p style="margin-top:8px;">
-        📍 Phoenix Marketcity, Pune
+      <p>
+        Discover concerts, workshops, sports and unforgettable
+        experiences. Find your next event and book your tickets
+        in just a few clicks.
       </p>
+
+      <button class="primary-button" onclick="startEventra()">
+        Get Started →
+      </button>
 
     </div>
 
-  </div>
 
-</section>
+    <div class="welcome-visual">
 
+      <div class="visual-card">
 
-<!-- =====================================================
-     SCREEN 2 - LOGIN
-===================================================== -->
+        <div class="visual-circle one"></div>
+        <div class="visual-circle two"></div>
 
-<section class="login-screen screen" id="loginScreen">
+        <div class="visual-title">
+          Eventra
+        </div>
 
-  <div class="login-card">
+        <div class="visual-subtitle">
+          Your world of events
+        </div>
 
-    <div class="login-logo">Eventra</div>
+        <div class="floating-event music">
+          <span>MUSIC</span>
+          <h3>Live Music Night 🎵</h3>
+          <p>Discover artists worth experiencing.</p>
+        </div>
 
-    <h2>Welcome back 👋</h2>
-
-    <p class="login-subtitle">
-      Sign in to continue to Eventra
-    </p>
-
-    <form onsubmit="loginEventra(event)">
-
-      <label for="email">Email</label>
-
-      <input
-        type="email"
-        id="email"
-        placeholder="Enter your email"
-        required
-      >
-
-      <div class="password-row">
-
-        <label for="password">Password</label>
-
-        <a href="#" onclick="forgotPassword(event)">
-          Forgot password?
-        </a>
+        <div class="floating-event tech">
+          <span>TECH</span>
+          <h3>Tech Connect 💻</h3>
+          <p>Learn, connect and grow.</p>
+        </div>
 
       </div>
 
-      <input
-        type="password"
-        id="password"
-        placeholder="Enter your password"
-        required
-      >
-
-      <button type="submit" class="login-button">
-        Login →
-      </button>
-
-    </form>
-
-    <div class="divider">
-      <span>OR</span>
     </div>
 
-    <button class="google-button" onclick="googleLogin()">
-      G &nbsp; Continue with Google
-    </button>
-
-    <p class="signup-text">
-      Don't have an account?
-      <a href="#" onclick="signupEventra(event)">
-        Sign up
-      </a>
-    </p>
-
-  </div>
-
-</section>
+  </section>
 
 
-<!-- =====================================================
-     SCREEN 3 - HOME
-===================================================== -->
+  <!-- =========================
+       2. LOGIN
+  ========================== -->
 
-<section class="home-screen screen" id="homeScreen">
+  <section class="auth-screen" id="loginScreen">
 
-  <header class="navbar">
+    <div class="auth-card">
 
-    <div class="nav-logo">Eventra</div>
+      <div class="auth-logo">
+        Eventra
+      </div>
 
-    <nav>
+      <h2>Welcome back 👋</h2>
 
-      <a
-        class="active"
-        href="#"
-        onclick="showHome(event)"
-      >
-        Home
-      </a>
-
-      <a
-        href="#"
-        onclick="showHome(event)"
-      >
-        Explore
-      </a>
-
-      <a
-        href="#"
-        onclick="showHome(event)"
-      >
-        Categories
-      </a>
-
-      <a
-        href="#"
-        onclick="openDashboard(event)"
-      >
-        My Tickets
-      </a>
-
-      <a
-        href="#"
-        onclick="openDashboard(event)"
-      >
-        Profile
-      </a>
-
-    </nav>
-
-    <button
-      class="profile-btn"
-      onclick="openDashboard()"
-    >
-      A
-    </button>
-
-  </header>
+      <p class="auth-subtitle">
+        Sign in to continue to Eventra.
+      </p>
 
 
-  <div class="home-container">
+      <form onsubmit="loginEventra(event)">
 
-    <!-- HERO -->
+        <div class="form-group">
 
-    <section class="hero">
-
-      <div class="hero-content">
-
-        <span class="hero-label">
-          DISCOVER • CONNECT • EXPERIENCE
-        </span>
-
-        <h1>
-          Discover events<br>
-          worth <span>experiencing.</span>
-        </h1>
-
-        <p>
-          Find concerts, workshops, sports and exciting experiences
-          happening around you.
-        </p>
-
-        <div class="search-box">
-
-          <span>🔎</span>
+          <label for="loginEmail">
+            Email
+          </label>
 
           <input
-            type="text"
-            id="eventSearch"
-            placeholder="Search events, artists, venues..."
-            onkeyup="searchEvents()"
+            class="form-input"
+            type="email"
+            id="loginEmail"
+            placeholder="Enter your email"
+            required
           >
 
         </div>
 
-      </div>
 
-      <div class="hero-decoration">
+        <div class="form-group">
 
-        <div class="floating-card card-one">
-          🎵 Live Music
-        </div>
+          <div class="password-row">
 
-        <div class="floating-card card-two">
-          💻 Tech Events
-        </div>
+            <label for="loginPassword">
+              Password
+            </label>
 
-        <div class="hero-circle">
-          🎟️
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- CATEGORIES -->
-
-    <section class="section">
-
-      <div class="section-heading">
-
-        <div>
-
-          <span class="small-label">
-            EXPLORE
-          </span>
-
-          <h2>
-            Browse Categories
-          </h2>
-
-        </div>
-
-        <a
-          href="#"
-          onclick="showAllEvents(event)"
-        >
-          View all →
-        </a>
-
-      </div>
-
-
-      <div class="categories">
-
-        <button
-          class="category"
-          onclick="filterCategory('Music')"
-        >
-          <span>🎵</span>
-          <strong>Music</strong>
-        </button>
-
-        <button
-          class="category"
-          onclick="filterCategory('Tech')"
-        >
-          <span>💻</span>
-          <strong>Tech</strong>
-        </button>
-
-        <button
-          class="category"
-          onclick="filterCategory('Sports')"
-        >
-          <span>⚽</span>
-          <strong>Sports</strong>
-        </button>
-
-        <button
-          class="category"
-          onclick="filterCategory('Workshops')"
-        >
-          <span>🛠️</span>
-          <strong>Workshops</strong>
-        </button>
-
-        <button
-          class="category"
-          onclick="filterCategory('Festivals')"
-        >
-          <span>🎉</span>
-          <strong>Festivals</strong>
-        </button>
-
-      </div>
-
-    </section>
-
-
-    <!-- FEATURED EVENTS -->
-
-    <section class="section">
-
-      <div class="section-heading">
-
-        <div>
-
-          <span class="small-label">
-            HANDPICKED FOR YOU
-          </span>
-
-          <h2>
-            Featured Events
-          </h2>
-
-        </div>
-
-        <a
-          href="#"
-          onclick="showAllEvents(event)"
-        >
-          View all →
-        </a>
-
-      </div>
-
-
-      <div class="event-grid" id="eventGrid">
-
-
-        <!-- MUSIC -->
-
-        <article
-          class="home-event-card"
-          data-category="Music"
-          onclick="openEventDetails('music')"
-        >
-
-          <div class="event-image music-image">
-
-            <span class="event-badge">
-              MUSIC
-            </span>
-
-            <button
-              class="heart-btn"
-              onclick="toggleFavorite(this,event)"
-            >
-              ♡
-            </button>
-
-            🎵
+            <a href="#" onclick="forgotPassword(event)">
+              Forgot password?
+            </a>
 
           </div>
 
-          <div class="event-info">
+          <input
+            class="form-input"
+            type="password"
+            id="loginPassword"
+            placeholder="Enter your password"
+            required
+          >
 
-            <span class="event-date">
-              18 OCT 2026
+        </div>
+
+
+        <button class="auth-button" type="submit">
+          Login →
+        </button>
+
+      </form>
+
+
+      <div class="divider">
+        <span>OR</span>
+      </div>
+
+
+      <button class="google-button" onclick="googleLogin()">
+        <span class="google-icon">G</span>
+        Continue with Google
+      </button>
+
+
+      <p class="auth-footer">
+        Don't have an account?
+        <a
+          class="auth-link"
+          href="#"
+          onclick="openSignup(event)"
+        >
+          Sign up
+        </a>
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       3. SIGN UP
+  ========================== -->
+
+  <section class="auth-screen" id="signupScreen">
+
+    <div class="auth-card">
+
+      <div class="auth-logo">
+        Eventra
+      </div>
+
+      <h2>Create your account ✨</h2>
+
+      <p class="auth-subtitle">
+        Join Eventra and start discovering amazing events.
+      </p>
+
+
+      <form onsubmit="signupAccount(event)">
+
+        <div class="form-group">
+
+          <label for="signupName">
+            Full Name
+          </label>
+
+          <input
+            class="form-input"
+            type="text"
+            id="signupName"
+            placeholder="Enter your full name"
+            required
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="signupEmail">
+            Email
+          </label>
+
+          <input
+            class="form-input"
+            type="email"
+            id="signupEmail"
+            placeholder="Enter your email"
+            required
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="signupPassword">
+            Password
+          </label>
+
+          <input
+            class="form-input"
+            type="password"
+            id="signupPassword"
+            placeholder="Create a password"
+            minlength="6"
+            required
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="confirmPassword">
+            Confirm Password
+          </label>
+
+          <input
+            class="form-input"
+            type="password"
+            id="confirmPassword"
+            placeholder="Confirm your password"
+            minlength="6"
+            required
+          >
+
+        </div>
+
+
+        <button class="auth-button" type="submit">
+          Create Account →
+        </button>
+
+      </form>
+
+
+      <p class="auth-footer">
+        Already have an account?
+        <a
+          class="auth-link"
+          href="#"
+          onclick="openLogin(event)"
+        >
+          Login
+        </a>
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       4. HOME
+  ========================== -->
+
+  <section class="home-screen" id="homeScreen">
+
+    <header class="navbar">
+
+      <div class="nav-logo">
+        Eventra
+      </div>
+
+      <nav>
+
+        <a
+          class="active"
+          href="#"
+          onclick="showHome(event)"
+        >
+          Home
+        </a>
+
+        <a
+          href="#"
+          onclick="showHome(event)"
+        >
+          Explore
+        </a>
+
+        <a
+          href="#"
+          onclick="showHome(event)"
+        >
+          Categories
+        </a>
+
+        <a
+          href="#"
+          onclick="openDashboard(event)"
+        >
+          My Tickets
+        </a>
+
+        <a
+          href="#"
+          onclick="openDashboard(event)"
+        >
+          Profile
+        </a>
+
+      </nav>
+
+      <button
+        class="profile-btn"
+        onclick="openDashboard()"
+      >
+        A
+      </button>
+
+    </header>
+
+
+    <div class="home-container">
+
+      <!-- HERO -->
+
+      <section class="hero">
+
+        <div class="hero-content">
+
+          <span class="hero-label">
+            DISCOVER • CONNECT • EXPERIENCE
+          </span>
+
+          <h1>
+            Discover events<br>
+            worth <span>experiencing.</span>
+          </h1>
+
+          <p>
+            Find concerts, workshops, sports and exciting
+            experiences happening around you.
+          </p>
+
+          <div class="search-box">
+
+            <span>🔎</span>
+
+            <input
+              type="text"
+              id="eventSearch"
+              placeholder="Search events, artists, venues..."
+              onkeyup="searchEvents()"
+            >
+
+          </div>
+
+        </div>
+
+
+        <div class="hero-decoration">
+
+          <div class="floating-card card-one">
+            🎵 Live Music
+          </div>
+
+          <div class="hero-circle">
+            🎟️
+          </div>
+
+          <div class="floating-card card-two">
+            💻 Tech Events
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- CATEGORIES -->
+
+      <section class="section">
+
+        <div class="section-heading">
+
+          <div>
+            <span class="small-label">
+              EXPLORE
             </span>
 
-            <h3>
+            <h2>
+              Browse Categories
+            </h2>
+          </div>
+
+          <a
+            href="#"
+            onclick="showAllEvents(event)"
+          >
+            View all →
+          </a>
+
+        </div>
+
+
+        <div class="categories">
+
+          <button
+            class="category"
+            onclick="filterCategory('Music')"
+          >
+            <span>🎵</span>
+            <strong>Music</strong>
+          </button>
+
+          <button
+            class="category"
+            onclick="filterCategory('Tech')"
+          >
+            <span>💻</span>
+            <strong>Tech</strong>
+          </button>
+
+          <button
+            class="category"
+            onclick="filterCategory('Sports')"
+          >
+            <span>⚽</span>
+            <strong>Sports</strong>
+          </button>
+
+          <button
+            class="category"
+            onclick="filterCategory('Workshops')"
+          >
+            <span>🛠️</span>
+            <strong>Workshops</strong>
+          </button>
+
+          <button
+            class="category"
+            onclick="filterCategory('Festivals')"
+          >
+            <span>🎉</span>
+            <strong>Festivals</strong>
+          </button>
+
+        </div>
+
+      </section>
+
+
+      <!-- FEATURED EVENTS -->
+
+      <section class="section">
+
+        <div class="section-heading">
+
+          <div>
+            <span class="small-label">
+              HANDPICKED FOR YOU
+            </span>
+
+            <h2>
+              Featured Events
+            </h2>
+          </div>
+
+          <a
+            href="#"
+            onclick="showAllEvents(event)"
+          >
+            View all →
+          </a>
+
+        </div>
+
+
+        <div class="event-grid">
+
+          <!-- MUSIC -->
+
+          <article
+            class="home-event-card"
+            data-category="Music"
+            onclick="openEventDetails()"
+          >
+
+            <div class="event-image music-image">
+
+              🎵
+
+              <span class="event-badge">
+                MUSIC
+              </span>
+
+              <button
+                class="heart-btn"
+                data-event-name="Indie Nights: Live in Pune"
+                onclick="toggleFavorite(this,event)"
+              >
+                ♡
+              </button>
+
+            </div>
+
+
+            <div class="event-info">
+
+              <span class="event-date">
+                18 OCT 2026
+              </span>
+
+              <h3>
+                Indie Nights: Live in Pune
+              </h3>
+
+              <p>
+                📍 Phoenix Marketcity, Pune
+              </p>
+
+              <div class="event-bottom">
+                <strong>From ₹999</strong>
+                <span>7:00 PM</span>
+              </div>
+
+            </div>
+
+          </article>
+
+
+          <!-- TECH -->
+
+          <article
+            class="home-event-card"
+            data-category="Tech"
+            onclick="openEventDetails()"
+          >
+
+            <div class="event-image tech-image">
+
+              💻
+
+              <span class="event-badge">
+                TECH
+              </span>
+
+              <button
+                class="heart-btn"
+                data-event-name="Tech Connect 2026"
+                onclick="toggleFavorite(this,event)"
+              >
+                ♡
+              </button>
+
+            </div>
+
+
+            <div class="event-info">
+
+              <span class="event-date">
+                25 OCT 2026
+              </span>
+
+              <h3>
+                Tech Connect 2026
+              </h3>
+
+              <p>
+                📍 BKC Convention Centre, Mumbai
+              </p>
+
+              <div class="event-bottom">
+                <strong>From ₹799</strong>
+                <span>10:00 AM</span>
+              </div>
+
+            </div>
+
+          </article>
+
+
+          <!-- WORKSHOP -->
+
+          <article
+            class="home-event-card"
+            data-category="Workshops"
+            onclick="openEventDetails()"
+          >
+
+            <div class="event-image workshop-image">
+
+              🛠️
+
+              <span class="event-badge">
+                WORKSHOP
+              </span>
+
+              <button
+                class="heart-btn"
+                data-event-name="Creative Design Workshop"
+                onclick="toggleFavorite(this,event)"
+              >
+                ♡
+              </button>
+
+            </div>
+
+
+            <div class="event-info">
+
+              <span class="event-date">
+                02 NOV 2026
+              </span>
+
+              <h3>
+                Creative Design Workshop
+              </h3>
+
+              <p>
+                📍 The Design Hub, Pune
+              </p>
+
+              <div class="event-bottom">
+                <strong>From ₹599</strong>
+                <span>2:00 PM</span>
+              </div>
+
+            </div>
+
+          </article>
+
+        </div>
+
+      </section>
+
+
+      <!-- UPCOMING -->
+
+      <section class="section">
+
+        <div class="section-heading">
+
+          <div>
+            <span class="small-label">
+              DON'T MISS OUT
+            </span>
+
+            <h2>
+              Upcoming Events
+            </h2>
+          </div>
+
+        </div>
+
+
+        <div class="upcoming-list">
+
+          <div
+            class="upcoming-card"
+            onclick="openEventDetails()"
+          >
+
+            <div class="upcoming-date">
+              <strong>08</strong>
+              <span>NOV</span>
+            </div>
+
+            <div>
+              <h3>
+                City Football Championship
+              </h3>
+
+              <p>
+                ⚽ Sports · 📍 Mumbai Sports Arena
+              </p>
+            </div>
+
+            <strong class="upcoming-price">
+              ₹499
+            </strong>
+
+          </div>
+
+
+          <div
+            class="upcoming-card"
+            onclick="openEventDetails()"
+          >
+
+            <div class="upcoming-date">
+              <strong>15</strong>
+              <span>NOV</span>
+            </div>
+
+            <div>
+              <h3>
+                Diwali Lights Festival
+              </h3>
+
+              <p>
+                🎉 Festival · 📍 Riverfront Grounds
+              </p>
+            </div>
+
+            <strong class="upcoming-price">
+              ₹699
+            </strong>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+
+
+    <div class="mobile-nav">
+
+      <a
+        class="active"
+        onclick="showHome()"
+      >
+        ⌂
+        <span>Home</span>
+      </a>
+
+      <a onclick="showHome()">
+        ⌕
+        <span>Explore</span>
+      </a>
+
+      <a onclick="openDashboard()">
+        🎟️
+        <span>Tickets</span>
+      </a>
+
+      <a onclick="openDashboard()">
+        ◯
+        <span>Profile</span>
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       5. EVENT DETAILS
+  ========================== -->
+
+  <section class="details-screen" id="detailsScreen">
+
+    <div class="details-container">
+
+      <button
+        class="back-button"
+        onclick="backToHome()"
+      >
+        ← Back to Events
+      </button>
+
+
+      <div class="details-layout">
+
+        <div class="details-image">
+
+          <span class="details-badge">
+            MUSIC
+          </span>
+
+          <button
+            class="details-heart"
+            id="detailsHeart"
+            onclick="toggleDetailsFavorite(this,event)"
+          >
+            ♡
+          </button>
+
+          <div class="details-image-content">
+            🎵
+            <span>LIVE MUSIC</span>
+          </div>
+
+        </div>
+
+
+        <div class="details-content">
+
+          <span class="details-category">
+            MUSIC
+          </span>
+
+          <h1>
+            Indie Nights: Live in Pune
+          </h1>
+
+
+          <div class="event-meta">
+
+            <div>
+              <span>📅</span>
+
+              <div>
+                <strong>
+                  Saturday, 18 October 2026
+                </strong>
+
+                <small>
+                  7:00 PM – 10:00 PM
+                </small>
+              </div>
+            </div>
+
+
+            <div>
+              <span>📍</span>
+
+              <div>
+                <strong>
+                  Phoenix Marketcity, Pune
+                </strong>
+
+                <small>
+                  Pune, Maharashtra
+                </small>
+              </div>
+            </div>
+
+          </div>
+
+
+          <div class="about-event">
+
+            <h2>
+              About this event
+            </h2>
+
+            <p>
+              Experience an unforgettable evening of live indie
+              music, talented artists and an energetic atmosphere.
+              Bring your friends and enjoy a night filled with
+              great music and memorable moments.
+            </p>
+
+          </div>
+
+
+          <div class="booking-bar">
+
+            <div>
+              <span>Starting from</span>
+              <strong>₹999</strong>
+            </div>
+
+            <button
+              class="book-button"
+              onclick="openTickets()"
+            >
+              Book Now →
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       6. TICKET SELECTION
+  ========================== -->
+
+  <section class="tickets-screen" id="ticketsScreen">
+
+    <div class="tickets-container">
+
+      <button
+        class="back-button"
+        onclick="backToDetails()"
+      >
+        ← Back to Event
+      </button>
+
+
+      <div class="booking-progress">
+
+        <div class="progress-step active">
+          <span>1</span>
+          Tickets
+        </div>
+
+        <div class="progress-line"></div>
+
+        <div class="progress-step">
+          <span>2</span>
+          Summary
+        </div>
+
+        <div class="progress-line"></div>
+
+        <div class="progress-step">
+          <span>3</span>
+          Confirmation
+        </div>
+
+      </div>
+
+
+      <div class="tickets-header">
+
+        <span>
+          BOOK YOUR EXPERIENCE
+        </span>
+
+        <h1>
+          Select your tickets
+        </h1>
+
+        <p>
+          Indie Nights: Live in Pune
+        </p>
+
+      </div>
+
+
+      <div class="ticket-options">
+
+        <div class="ticket-option">
+
+          <div class="ticket-info">
+
+            <div class="ticket-icon">
+              🎟️
+            </div>
+
+            <div>
+              <h3>
+                General Admission
+              </h3>
+
+              <p>
+                Standard entry
+              </p>
+
+              <strong>
+                ₹999
+              </strong>
+            </div>
+
+          </div>
+
+
+          <div class="quantity-control">
+
+            <button onclick="changeQuantity('general',-1)">
+              −
+            </button>
+
+            <span id="generalQuantity">
+              1
+            </span>
+
+            <button onclick="changeQuantity('general',1)">
+              +
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <div class="ticket-option">
+
+          <div class="ticket-info">
+
+            <div class="ticket-icon">
+              ⭐
+            </div>
+
+            <div>
+              <h3>
+                VIP Ticket
+              </h3>
+
+              <p>
+                Premium access
+              </p>
+
+              <strong>
+                ₹1,499
+              </strong>
+            </div>
+
+          </div>
+
+
+          <div class="quantity-control">
+
+            <button onclick="changeQuantity('vip',-1)">
+              −
+            </button>
+
+            <span id="vipQuantity">
+              0
+            </span>
+
+            <button onclick="changeQuantity('vip',1)">
+              +
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <div class="ticket-option">
+
+          <div class="ticket-info">
+
+            <div class="ticket-icon">
+              ⚡
+            </div>
+
+            <div>
+              <h3>
+                Early Bird
+              </h3>
+
+              <p>
+                Limited availability
+              </p>
+
+              <strong>
+                ₹799
+              </strong>
+            </div>
+
+          </div>
+
+
+          <div class="quantity-control">
+
+            <button onclick="changeQuantity('early',-1)">
+              −
+            </button>
+
+            <span id="earlyQuantity">
+              0
+            </span>
+
+            <button onclick="changeQuantity('early',1)">
+              +
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="ticket-summary">
+
+        <div>
+          <span>Selected tickets</span>
+          <strong id="ticketCount">
+            1 ticket
+          </strong>
+        </div>
+
+        <div>
+          <span>Total</span>
+          <strong id="ticketTotal">
+            ₹999
+          </strong>
+        </div>
+
+        <button
+          class="continue-button"
+          onclick="openSummary()"
+        >
+          Continue →
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       7. SUMMARY
+  ========================== -->
+
+  <section class="summary-screen" id="summaryScreen">
+
+    <div class="summary-container">
+
+      <button
+        class="back-button"
+        onclick="backToTickets()"
+      >
+        ← Back to Tickets
+      </button>
+
+
+      <div class="summary-header">
+
+        <span>
+          ALMOST THERE
+        </span>
+
+        <h1>
+          Review your booking
+        </h1>
+
+        <p>
+          Check your details before confirming your tickets.
+        </p>
+
+      </div>
+
+
+      <div class="summary-layout">
+
+        <div class="summary-event-card">
+
+          <div class="summary-event-image">
+            🎵
+            <span>LIVE MUSIC</span>
+          </div>
+
+          <div class="summary-event-info">
+
+            <span class="summary-category">
+              MUSIC
+            </span>
+
+            <h2>
               Indie Nights: Live in Pune
-            </h3>
+            </h2>
+
+            <p>
+              📅 Saturday, 18 October 2026
+            </p>
+
+            <p>
+              🕐 7:00 PM – 10:00 PM
+            </p>
 
             <p>
               📍 Phoenix Marketcity, Pune
             </p>
 
-            <div class="event-bottom">
-
-              <strong>
-                From ₹999
-              </strong>
-
-              <span>
-                7:00 PM
-              </span>
-
-            </div>
-
           </div>
 
-        </article>
+        </div>
 
 
-        <!-- TECH -->
-
-        <article
-          class="home-event-card"
-          data-category="Tech"
-          onclick="openEventDetails('tech')"
-        >
-
-          <div class="event-image tech-image">
-
-            <span class="event-badge">
-              TECH
-            </span>
-
-            <button
-              class="heart-btn"
-              onclick="toggleFavorite(this,event)"
-            >
-              ♡
-            </button>
-
-            💻
-
-          </div>
-
-          <div class="event-info">
-
-            <span class="event-date">
-              25 OCT 2026
-            </span>
-
-            <h3>
-              Tech Connect 2026
-            </h3>
-
-            <p>
-              📍 BKC Convention Centre, Mumbai
-            </p>
-
-            <div class="event-bottom">
-
-              <strong>
-                From ₹799
-              </strong>
-
-              <span>
-                10:00 AM
-              </span>
-
-            </div>
-
-          </div>
-
-        </article>
-
-
-        <!-- WORKSHOP -->
-
-        <article
-          class="home-event-card"
-          data-category="Workshops"
-          onclick="openEventDetails('workshop')"
-        >
-
-          <div class="event-image workshop-image">
-
-            <span class="event-badge">
-              WORKSHOP
-            </span>
-
-            <button
-              class="heart-btn"
-              onclick="toggleFavorite(this,event)"
-            >
-              ♡
-            </button>
-
-            🛠️
-
-          </div>
-
-          <div class="event-info">
-
-            <span class="event-date">
-              02 NOV 2026
-            </span>
-
-            <h3>
-              Creative Design Workshop
-            </h3>
-
-            <p>
-              📍 The Design Hub, Mumbai
-            </p>
-
-            <div class="event-bottom">
-
-              <strong>
-                From ₹599
-              </strong>
-
-              <span>
-                2:00 PM
-              </span>
-
-            </div>
-
-          </div>
-
-        </article>
-
-      </div>
-
-    </section>
-
-
-    <!-- UPCOMING EVENTS -->
-
-    <section class="section upcoming-section">
-
-      <div class="section-heading">
-
-        <div>
-
-          <span class="small-label">
-            DON'T MISS OUT
-          </span>
+        <div class="order-card">
 
           <h2>
-            Upcoming Events
+            Order Summary
           </h2>
 
-        </div>
+          <div id="orderItems"></div>
 
-      </div>
+          <div class="order-divider"></div>
 
-
-      <div class="upcoming-list">
-
-        <div class="upcoming-card">
-
-          <div class="upcoming-date">
-            <strong>08</strong>
-            <span>NOV</span>
-          </div>
-
-          <div>
-
-            <h3>
-              City Football Championship
-            </h3>
-
-            <p>
-              ⚽ Sports · 📍 Mumbai Sports Arena
-            </p>
-
-          </div>
-
-          <strong class="upcoming-price">
-            ₹499
-          </strong>
-
-        </div>
-
-
-        <div class="upcoming-card">
-
-          <div class="upcoming-date">
-            <strong>15</strong>
-            <span>NOV</span>
-          </div>
-
-          <div>
-
-            <h3>
-              Diwali Lights Festival
-            </h3>
-
-            <p>
-              🎉 Festival · 📍 Riverfront Grounds
-            </p>
-
-          </div>
-
-          <strong class="upcoming-price">
-            ₹699
-          </strong>
-
-        </div>
-
-      </div>
-
-    </section>
-
-  </div>
-
-
-  <!-- MOBILE NAV -->
-
-  <div class="mobile-nav">
-
-    <a
-      class="active"
-      href="#"
-      onclick="showHome(event)"
-    >
-      ⌂
-      <span>Home</span>
-    </a>
-
-    <a
-      href="#"
-      onclick="showHome(event)"
-    >
-      ⌕
-      <span>Explore</span>
-    </a>
-
-    <a
-      href="#"
-      onclick="openDashboard(event)"
-    >
-      🎟️
-      <span>Tickets</span>
-    </a>
-
-    <a
-      href="#"
-      onclick="openDashboard(event)"
-    >
-      ◯
-      <span>Profile</span>
-    </a>
-
-  </div>
-
-</section>
-
-
-<!-- =====================================================
-     SCREEN 4 - EVENT DETAILS
-===================================================== -->
-
-<section class="details-screen screen" id="detailsScreen">
-
-  <div class="details-container">
-
-    <button
-      class="back-button"
-      onclick="backToHome()"
-    >
-      ← Back to Events
-    </button>
-
-
-    <div class="details-layout">
-
-
-      <div class="details-image">
-
-        <span
-          class="details-badge"
-          id="detailsBadge"
-        >
-          MUSIC
-        </span>
-
-        <button
-          class="details-heart"
-          id="detailsHeart"
-          onclick="toggleDetailsFavorite(this,event)"
-        >
-          ♡
-        </button>
-
-        <div class="details-image-content">
-
-          <span id="detailsIcon">
-            🎵
-          </span>
-
-          <span id="detailsImageLabel">
-            LIVE MUSIC
-          </span>
-
-        </div>
-
-      </div>
-
-
-      <div class="details-content">
-
-        <span
-          class="details-category"
-          id="detailsCategory"
-        >
-          MUSIC
-        </span>
-
-        <h1 id="detailsTitle">
-          Indie Nights: Live in Pune
-        </h1>
-
-
-        <div class="event-meta">
-
-          <div>
-
-            <span>📅</span>
-
-            <div>
-
-              <strong id="detailsDate">
-                Saturday, 18 October 2026
-              </strong>
-
-              <small id="detailsTime">
-                7:00 PM – 10:00 PM
-              </small>
-
-            </div>
-
-          </div>
-
-
-          <div>
-
-            <span>📍</span>
-
-            <div>
-
-              <strong id="detailsVenue">
-                Phoenix Marketcity, Pune
-              </strong>
-
-              <small id="detailsLocation">
-                Pune, Maharashtra
-              </small>
-
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <div class="about-event">
-
-          <h2>
-            About this event
-          </h2>
-
-          <p id="detailsDescription">
-            Experience an unforgettable evening of live indie music,
-            talented artists and an energetic atmosphere. Bring your
-            friends and enjoy a night filled with great music and
-            memorable moments.
-          </p>
-
-        </div>
-
-
-        <div class="booking-bar">
-
-          <div>
-
-            <span>
-              Starting from
-            </span>
-
-            <strong id="detailsPrice">
+          <div class="price-row">
+            <span>Subtotal</span>
+            <strong id="summarySubtotal">
               ₹999
             </strong>
+          </div>
 
+          <div class="price-row">
+            <span>Booking fee</span>
+            <strong id="bookingFee">
+              ₹50
+            </strong>
+          </div>
+
+          <div class="order-divider"></div>
+
+          <div class="total-row">
+            <span>Total</span>
+            <strong id="summaryTotal">
+              ₹1,049
+            </strong>
           </div>
 
           <button
-            class="book-button"
-            onclick="openTickets()"
+            class="pay-button"
+            onclick="confirmBooking()"
           >
-            Book Now →
+            Confirm & Pay →
           </button>
+
+          <p class="secure-note">
+            🔒 Secure booking • Your payment information is protected
+          </p>
 
         </div>
 
@@ -2557,688 +2998,242 @@ button {
 
     </div>
 
-  </div>
-
-</section>
+  </section>
 
 
-<!-- =====================================================
-     SCREEN 5 - TICKET SELECTION
-===================================================== -->
+  <!-- =========================
+       8. CONFIRMATION
+  ========================== -->
 
-<section class="tickets-screen screen" id="ticketsScreen">
+  <section
+    class="confirmation-screen"
+    id="confirmationScreen"
+  >
 
-  <div class="tickets-container">
+    <div class="confirmation-container">
 
-    <button
-      class="back-button"
-      onclick="backToDetails()"
-    >
-      ← Back to Event
-    </button>
-
-
-    <div class="booking-progress">
-
-      <div class="progress-step active">
-        <span>1</span>
-        Tickets
+      <div class="success-icon">
+        ✓
       </div>
 
-      <div class="progress-line"></div>
-
-      <div class="progress-step">
-        <span>2</span>
-        Summary
-      </div>
-
-      <div class="progress-line"></div>
-
-      <div class="progress-step">
-        <span>3</span>
-        Confirmation
-      </div>
-
-    </div>
-
-
-    <div class="tickets-header">
-
-      <span>
-        BOOK YOUR EXPERIENCE
+      <span class="confirmation-label">
+        BOOKING CONFIRMED
       </span>
 
       <h1>
-        Select your tickets
+        You're going! 🎉
       </h1>
 
-      <p id="ticketEventName">
-        Indie Nights: Live in Pune
+      <p class="confirmation-subtitle">
+        Your tickets have been booked successfully.
       </p>
 
-    </div>
+
+      <div class="ticket-card">
+
+        <div class="ticket-card-top">
+
+          <div>
+            <span class="ticket-category">
+              MUSIC EVENT
+            </span>
+
+            <h2>
+              Indie Nights: Live in Pune
+            </h2>
+          </div>
+
+          <div class="ticket-status">
+            CONFIRMED
+          </div>
+
+        </div>
 
 
-    <div class="ticket-options">
+        <div class="ticket-event-details">
 
-
-      <!-- GENERAL -->
-
-      <div class="ticket-option">
-
-        <div class="ticket-info">
-
-          <div class="ticket-icon">
-            🎟️
+          <div>
+            <span>DATE</span>
+            <strong>18 OCT 2026</strong>
           </div>
 
           <div>
-
-            <h3>
-              General Admission
-            </h3>
-
-            <p>
-              Standard entry
-            </p>
-
-            <strong>
-              ₹999
-            </strong>
-
-          </div>
-
-        </div>
-
-
-        <div class="quantity-control">
-
-          <button onclick="changeQuantity('general',-1)">
-            −
-          </button>
-
-          <span id="generalQuantity">
-            1
-          </span>
-
-          <button onclick="changeQuantity('general',1)">
-            +
-          </button>
-
-        </div>
-
-      </div>
-
-
-      <!-- VIP -->
-
-      <div class="ticket-option">
-
-        <div class="ticket-info">
-
-          <div class="ticket-icon">
-            ⭐
+            <span>TIME</span>
+            <strong>7:00 PM</strong>
           </div>
 
           <div>
-
-            <h3>
-              VIP Ticket
-            </h3>
-
-            <p>
-              Premium access
-            </p>
-
-            <strong>
-              ₹1,499
-            </strong>
-
+            <span>VENUE</span>
+            <strong>Phoenix Marketcity</strong>
           </div>
 
         </div>
 
 
-        <div class="quantity-control">
-
-          <button onclick="changeQuantity('vip',-1)">
-            −
-          </button>
-
-          <span id="vipQuantity">
-            0
-          </span>
-
-          <button onclick="changeQuantity('vip',1)">
-            +
-          </button>
-
-        </div>
-
-      </div>
+        <div class="ticket-divider"></div>
 
 
-      <!-- EARLY BIRD -->
+        <div class="ticket-bottom">
 
-      <div class="ticket-option">
+          <div class="ticket-booking-info">
 
-        <div class="ticket-info">
+            <div>
+              <span>BOOKING ID</span>
+              <strong id="bookingId">
+                EVT-2026-48291
+              </strong>
+            </div>
 
-          <div class="ticket-icon">
-            ⚡
+            <div>
+              <span>TICKETS</span>
+              <strong id="confirmedTicketCount">
+                1 Ticket
+              </strong>
+            </div>
+
           </div>
 
-          <div>
 
-            <h3>
-              Early Bird
-            </h3>
+          <div class="qr-container">
 
-            <p>
-              Limited availability
-            </p>
+            <div class="qr-code"></div>
 
-            <strong>
-              ₹799
-            </strong>
+            <span>
+              Scan at entry
+            </span>
 
           </div>
 
         </div>
 
-
-        <div class="quantity-control">
-
-          <button onclick="changeQuantity('early',-1)">
-            −
-          </button>
-
-          <span id="earlyQuantity">
-            0
-          </span>
-
-          <button onclick="changeQuantity('early',1)">
-            +
-          </button>
-
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <div class="ticket-summary">
-
-      <div>
-
-        <span>
-          Selected tickets
-        </span>
-
-        <strong id="ticketCount">
-          1 ticket
-        </strong>
-
       </div>
 
 
-      <div>
-
-        <span>
-          Total
-        </span>
-
-        <strong id="ticketTotal">
-          ₹999
-        </strong>
-
-      </div>
-
-
-      <button
-        class="continue-button"
-        onclick="openSummary()"
-      >
-        Continue →
-      </button>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =====================================================
-     SCREEN 6 - BOOKING SUMMARY
-===================================================== -->
-
-<section class="summary-screen screen" id="summaryScreen">
-
-  <div class="summary-container">
-
-    <button
-      class="back-button"
-      onclick="backToTickets()"
-    >
-      ← Back to Tickets
-    </button>
-
-
-    <div class="summary-header">
-
-      <span>
-        ALMOST THERE
-      </span>
-
-      <h1>
-        Review your booking
-      </h1>
-
-      <p>
-        Check your details before confirming your tickets.
-      </p>
-
-    </div>
-
-
-    <div class="summary-layout">
-
-
-      <div class="summary-event-card">
-
-        <div class="summary-event-image">
-
-          🎵
-
-          <span id="summaryImageLabel">
-            LIVE MUSIC
-          </span>
-
-        </div>
-
-
-        <div class="summary-event-info">
-
-          <span
-            class="summary-category"
-            id="summaryCategory"
-          >
-            MUSIC
-          </span>
-
-          <h2 id="summaryEventName">
-            Indie Nights: Live in Pune
-          </h2>
-
-          <p id="summaryDate">
-            📅 Saturday, 18 October 2026
-          </p>
-
-          <p id="summaryTime">
-            🕐 7:00 PM – 10:00 PM
-          </p>
-
-          <p id="summaryVenue">
-            📍 Phoenix Marketcity, Pune
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <div class="order-card">
-
-        <h2>
-          Order Summary
-        </h2>
-
-        <div
-          class="order-items"
-          id="orderItems"
-        ></div>
-
-        <div class="order-divider"></div>
-
-
-        <div class="price-row">
-
-          <span>
-            Subtotal
-          </span>
-
-          <strong id="summarySubtotal">
-            ₹999
-          </strong>
-
-        </div>
-
-
-        <div class="price-row">
-
-          <span>
-            Booking fee
-          </span>
-
-          <strong id="bookingFee">
-            ₹50
-          </strong>
-
-        </div>
-
-
-        <div class="order-divider"></div>
-
-
-        <div class="total-row">
-
-          <span>
-            Total
-          </span>
-
-          <strong id="summaryTotal">
-            ₹1,049
-          </strong>
-
-        </div>
-
+      <div class="confirmation-actions">
 
         <button
-          class="pay-button"
-          onclick="confirmBooking()"
+          class="download-ticket-button"
+          onclick="downloadTicket()"
         >
-          Confirm & Pay →
+          ↓ Save Ticket
         </button>
 
-        <p class="secure-note">
-          🔒 Secure booking • Your payment information is protected
+        <button
+          class="home-button"
+          onclick="goToHome()"
+        >
+          Back to Home
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       9. DASHBOARD
+  ========================== -->
+
+  <section
+    class="dashboard-screen"
+    id="dashboardScreen"
+  >
+
+    <header class="dashboard-navbar">
+
+      <div class="nav-logo">
+        Eventra
+      </div>
+
+      <button
+        class="dashboard-home-btn"
+        onclick="goToHome()"
+      >
+        ← Home
+      </button>
+
+    </header>
+
+
+    <div class="dashboard-container">
+
+      <div class="dashboard-heading">
+
+        <span>
+          YOUR EVENT SPACE
+        </span>
+
+        <h1>
+          My Dashboard
+        </h1>
+
+        <p>
+          Manage your bookings, tickets and favorite events.
         </p>
 
       </div>
 
-    </div>
 
-  </div>
+      <div class="dashboard-stats">
 
-</section>
+        <div class="stat-card">
 
+          <span>🎟️</span>
 
-<!-- =====================================================
-     SCREEN 7 - CONFIRMATION
-===================================================== -->
+          <div>
+            <strong id="dashboardTicketCount">
+              1
+            </strong>
 
-<section class="confirmation-screen screen" id="confirmationScreen">
-
-  <div class="confirmation-container">
-
-    <div class="success-icon">
-      ✓
-    </div>
-
-    <span class="confirmation-label">
-      BOOKING CONFIRMED
-    </span>
-
-    <h1>
-      You're going! 🎉
-    </h1>
-
-    <p class="confirmation-subtitle">
-      Your tickets have been booked successfully.
-    </p>
-
-
-    <div class="ticket-card">
-
-
-      <div class="ticket-card-top">
-
-        <div>
-
-          <span class="ticket-category">
-            MUSIC EVENT
-          </span>
-
-          <h2 id="confirmationEventName">
-            Indie Nights: Live in Pune
-          </h2>
-
-        </div>
-
-        <div class="ticket-status">
-          CONFIRMED
-        </div>
-
-      </div>
-
-
-      <div class="ticket-event-details">
-
-        <div>
-
-          <span>
-            DATE
-          </span>
-
-          <strong id="confirmationDate">
-            18 OCT 2026
-          </strong>
+            <p>
+              Tickets booked
+            </p>
+          </div>
 
         </div>
 
 
-        <div>
+        <div class="stat-card">
 
-          <span>
-            TIME
-          </span>
+          <span>📅</span>
 
-          <strong id="confirmationTime">
-            7:00 PM
-          </strong>
+          <div>
+            <strong>1</strong>
+
+            <p>
+              Upcoming event
+            </p>
+          </div>
 
         </div>
 
 
-        <div>
+        <div class="stat-card">
 
-          <span>
-            VENUE
-          </span>
+          <span>♡</span>
 
-          <strong id="confirmationVenue">
-            Phoenix Marketcity
-          </strong>
+          <div>
+            <strong id="favoriteCount">
+              0
+            </strong>
+
+            <p>
+              Favorites
+            </p>
+          </div>
 
         </div>
 
       </div>
 
 
-      <div class="ticket-divider"></div>
+      <!-- UPCOMING EVENT -->
 
+      <section class="dashboard-section">
 
-      <div class="ticket-bottom">
-
-        <div class="ticket-booking-info">
-
-          <span>
-            BOOKING ID
-          </span>
-
-          <strong id="bookingId">
-            —
-          </strong>
-
-
-          <span>
-            TICKETS
-          </span>
-
-          <strong id="confirmedTicketCount">
-            1 Ticket
-          </strong>
-
-        </div>
-
-
-        <div class="qr-container">
-
-          <div
-            class="qr-code"
-            id="qrCode"
-          ></div>
-
-          <span>
-            Scan at entry
-          </span>
-
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <div class="confirmation-actions">
-
-      <button
-        class="download-ticket-button"
-        onclick="downloadTicket()"
-      >
-        ↓ Save Ticket
-      </button>
-
-      <button
-        class="home-button"
-        onclick="goToHome()"
-      >
-        Back to Home
-      </button>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =====================================================
-     SCREEN 8 - DASHBOARD
-===================================================== -->
-
-<section class="dashboard-screen screen" id="dashboardScreen">
-
-  <header class="dashboard-navbar">
-
-    <div class="nav-logo">
-      Eventra
-    </div>
-
-    <button
-      class="dashboard-home-btn"
-      onclick="goToHome()"
-    >
-      ← Home
-    </button>
-
-  </header>
-
-
-  <div class="dashboard-container">
-
-
-    <div class="dashboard-heading">
-
-      <span>
-        YOUR EVENT SPACE
-      </span>
-
-      <h1>
-        My Dashboard
-      </h1>
-
-      <p>
-        Manage your bookings, tickets and favorite events.
-      </p>
-
-    </div>
-
-
-    <!-- STATS -->
-
-    <div class="dashboard-stats">
-
-      <div class="stat-card">
-
-        <span>🎟️</span>
-
-        <div>
-
-          <strong id="dashboardTicketCount">
-            0
-          </strong>
-
-          <p>
-            Tickets booked
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <div class="stat-card">
-
-        <span>📅</span>
-
-        <div>
-
-          <strong>
-            1
-          </strong>
-
-          <p>
-            Upcoming event
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <div class="stat-card">
-
-        <span>
-          ♡
-        </span>
-
-        <div>
-
-          <strong id="favoriteCount">
-            0
-          </strong>
-
-          <p>
-            Favorites
-          </p>
-
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <!-- UPCOMING EVENT -->
-
-    <section class="dashboard-section">
-
-      <div class="dashboard-section-heading">
-
-        <div>
+        <div class="dashboard-section-heading">
 
           <span>
             YOUR NEXT EXPERIENCE
@@ -3250,92 +3245,74 @@ button {
 
         </div>
 
-      </div>
 
+        <div class="dashboard-event-card">
 
-      <div class="dashboard-event-card">
-
-        <div class="dashboard-event-image">
-
-          🎵
-
-          <span>
-            MUSIC
-          </span>
-
-        </div>
-
-
-        <div class="dashboard-event-info">
-
-          <span class="dashboard-date">
-            18 OCT 2026
-          </span>
-
-          <h2 id="dashboardEventName">
-            Indie Nights: Live in Pune
-          </h2>
-
-          <p>
-            📍 Phoenix Marketcity, Pune
-          </p>
-
-          <p>
-            🕐 7:00 PM – 10:00 PM
-          </p>
-
-
-          <div class="dashboard-ticket-info">
-
-            <div>
-
-              <span>
-                BOOKING ID
-              </span>
-
-              <strong id="dashboardBookingId">
-                —
-              </strong>
-
-            </div>
-
-
-            <div>
-
-              <span>
-                TICKETS
-              </span>
-
-              <strong id="dashboardTickets">
-                No tickets
-              </strong>
-
-            </div>
-
+          <div class="dashboard-event-image">
+            🎵
+            <span>MUSIC</span>
           </div>
 
 
-          <button
-            class="view-ticket-button"
-            onclick="viewTicket()"
-          >
-            View Ticket →
-          </button>
+          <div class="dashboard-event-info">
+
+            <span class="dashboard-date">
+              18 OCT 2026
+            </span>
+
+            <h2>
+              Indie Nights: Live in Pune
+            </h2>
+
+            <p>
+              📍 Phoenix Marketcity, Pune
+            </p>
+
+            <p>
+              🕐 7:00 PM – 10:00 PM
+            </p>
+
+
+            <div class="dashboard-ticket-info">
+
+              <div>
+                <span>BOOKING ID</span>
+
+                <strong id="dashboardBookingId">
+                  Not booked yet
+                </strong>
+              </div>
+
+              <div>
+                <span>TICKETS</span>
+
+                <strong id="dashboardTickets">
+                  1 Ticket
+                </strong>
+              </div>
+
+            </div>
+
+
+            <button
+              class="view-ticket-button"
+              onclick="viewTicket()"
+            >
+              View Ticket →
+            </button>
+
+          </div>
 
         </div>
 
-      </div>
-
-    </section>
+      </section>
 
 
-    <!-- FAVORITES -->
+      <!-- FAVORITES -->
 
-    <section class="dashboard-section">
+      <section class="dashboard-section">
 
-      <div class="dashboard-section-heading">
-
-        <div>
+        <div class="dashboard-section-heading">
 
           <span>
             SAVED FOR LATER
@@ -3347,42 +3324,40 @@ button {
 
         </div>
 
-      </div>
 
+        <div
+          id="favoriteDashboard"
+          class="favorite-list"
+        >
 
-      <div
-        class="favorite-dashboard-card"
-        id="favoriteDashboard"
-      >
+          <div class="favorite-dashboard-card">
 
-        <div class="favorite-placeholder">
-          ♡
+            <div class="favorite-placeholder">
+              ♡
+            </div>
+
+            <div>
+              <h3>
+                No favorite events yet
+              </h3>
+
+              <p>
+                Tap the heart icon on an event to save it for later.
+              </p>
+            </div>
+
+          </div>
+
         </div>
 
-        <div>
-
-          <h3>
-            No favorite events yet
-          </h3>
-
-          <p>
-            Tap the heart icon on an event to save it for later.
-          </p>
-
-        </div>
-
-      </div>
-
-    </section>
+      </section>
 
 
-    <!-- HISTORY -->
+      <!-- HISTORY -->
 
-    <section class="dashboard-section">
+      <section class="dashboard-section">
 
-      <div class="dashboard-section-heading">
-
-        <div>
+        <div class="dashboard-section-heading">
 
           <span>
             PAST BOOKINGS
@@ -3394,1067 +3369,955 @@ button {
 
         </div>
 
-      </div>
 
+        <div class="history-card">
 
-      <div class="history-card">
-
-        <div class="history-icon">
-          🎵
-        </div>
-
-        <div>
-
-          <h3 id="historyEventName">
-            Indie Nights: Live in Pune
-          </h3>
-
-          <p>
-            18 Oct 2026 · Music
-          </p>
-
-        </div>
-
-        <span class="history-status">
-          Confirmed
-        </span>
-
-      </div>
-
-    </section>
-
-  </div>
-
-</section>
-
-
-<script>
-
-/* =====================================================
-   GLOBAL DATA
-===================================================== */
-
-let favoriteEvents = [];
-
-let currentBookingId = null;
-
-
-let selectedEvent = {
-  key: "music",
-  name: "Indie Nights: Live in Pune",
-  category: "MUSIC",
-  icon: "🎵",
-  imageLabel: "LIVE MUSIC",
-  date: "Saturday, 18 October 2026",
-  shortDate: "18 OCT 2026",
-  time: "7:00 PM – 10:00 PM",
-  venue: "Phoenix Marketcity, Pune",
-  location: "Pune, Maharashtra",
-  price: 999,
-  description:
-    "Experience an unforgettable evening of live indie music, talented artists and an energetic atmosphere. Bring your friends and enjoy a night filled with great music and memorable moments."
-};
-
-
-const events = {
-
-  music: {
-    key: "music",
-    name: "Indie Nights: Live in Pune",
-    category: "MUSIC",
-    icon: "🎵",
-    imageLabel: "LIVE MUSIC",
-    date: "Saturday, 18 October 2026",
-    shortDate: "18 OCT 2026",
-    time: "7:00 PM – 10:00 PM",
-    venue: "Phoenix Marketcity, Pune",
-    location: "Pune, Maharashtra",
-    price: 999,
-    description:
-      "Experience an unforgettable evening of live indie music, talented artists and an energetic atmosphere. Bring your friends and enjoy a night filled with great music and memorable moments."
-  },
-
-  tech: {
-    key: "tech",
-    name: "Tech Connect 2026",
-    category: "TECH",
-    icon: "💻",
-    imageLabel: "TECH EVENT",
-    date: "Sunday, 25 October 2026",
-    shortDate: "25 OCT 2026",
-    time: "10:00 AM – 5:00 PM",
-    venue: "BKC Convention Centre",
-    location: "Mumbai, Maharashtra",
-    price: 799,
-    description:
-      "Meet technology enthusiasts, designers and innovators at a full day of talks, networking and hands-on sessions covering the latest digital trends."
-  },
-
-  workshop: {
-    key: "workshop",
-    name: "Creative Design Workshop",
-    category: "WORKSHOP",
-    icon: "🛠️",
-    imageLabel: "DESIGN WORKSHOP",
-    date: "Monday, 2 November 2026",
-    shortDate: "02 NOV 2026",
-    time: "2:00 PM – 6:00 PM",
-    venue: "The Design Hub",
-    location: "Mumbai, Maharashtra",
-    price: 599,
-    description:
-      "Learn practical design thinking, visual communication and creative problem-solving techniques in this friendly hands-on workshop."
-  }
-
-};
-
-
-let ticketQuantities = {
-  general: 1,
-  vip: 0,
-  early: 0
-};
-
-
-const ticketPrices = {
-  general: 999,
-  vip: 1499,
-  early: 799
-};
-
-
-/* =====================================================
-   SCREEN CONTROL
-===================================================== */
-
-function hideAllScreens() {
-
-  document.querySelectorAll(".screen").forEach(screen => {
-    screen.style.display = "none";
-  });
-
-}
-
-
-function showScreen(id, display = "block") {
-
-  hideAllScreens();
-
-  document.getElementById(id).style.display = display;
-
-  window.scrollTo(0,0);
-
-}
-
-
-/* =====================================================
-   WELCOME / LOGIN
-===================================================== */
-
-function startEventra() {
-
-  showScreen("loginScreen", "flex");
-
-}
-
-
-function loginEventra(event) {
-
-  event.preventDefault();
-
-  showScreen("homeScreen");
-
-}
-
-
-function forgotPassword(event) {
-
-  event.preventDefault();
-
-  alert("Password reset screen coming soon.");
-
-}
-
-
-function googleLogin() {
-
-  alert("Google login selected.");
-
-}
-
-
-function signupEventra(event) {
-
-  event.preventDefault();
-
-  alert("Sign-up screen coming soon.");
-
-}
-
-
-/* =====================================================
-   HOME
-===================================================== */
-
-function showHome(event) {
-
-  if (event) {
-    event.preventDefault();
-  }
-
-  showScreen("homeScreen");
-
-}
-
-
-function searchEvents() {
-
-  const search =
-    document
-      .getElementById("eventSearch")
-      .value
-      .toLowerCase()
-      .trim();
-
-  const cards =
-    document.querySelectorAll(".home-event-card");
-
-  cards.forEach(card => {
-
-    const text =
-      card.textContent.toLowerCase();
-
-    card.style.display =
-      text.includes(search) ? "" : "none";
-
-  });
-
-}
-
-
-function filterCategory(category) {
-
-  document.getElementById("eventSearch").value = "";
-
-  const cards =
-    document.querySelectorAll(".home-event-card");
-
-  cards.forEach(card => {
-
-    card.style.display =
-      card.dataset.category === category
-        ? ""
-        : "none";
-
-  });
-
-}
-
-
-function showAllEvents(event) {
-
-  if (event) {
-    event.preventDefault();
-  }
-
-  document.getElementById("eventSearch").value = "";
-
-  document
-    .querySelectorAll(".home-event-card")
-    .forEach(card => {
-
-      card.style.display = "";
-
-    });
-
-}
-
-
-/* =====================================================
-   EVENT DETAILS
-===================================================== */
-
-function openEventDetails(eventKey = "music") {
-
-  selectedEvent =
-    events[eventKey] || events.music;
-
-
-  document.getElementById("detailsBadge").textContent =
-    selectedEvent.category;
-
-  document.getElementById("detailsCategory").textContent =
-    selectedEvent.category;
-
-  document.getElementById("detailsIcon").textContent =
-    selectedEvent.icon;
-
-  document.getElementById("detailsImageLabel").textContent =
-    selectedEvent.imageLabel;
-
-  document.getElementById("detailsTitle").textContent =
-    selectedEvent.name;
-
-  document.getElementById("detailsDate").textContent =
-    selectedEvent.date;
-
-  document.getElementById("detailsTime").textContent =
-    selectedEvent.time;
-
-  document.getElementById("detailsVenue").textContent =
-    selectedEvent.venue;
-
-  document.getElementById("detailsLocation").textContent =
-    selectedEvent.location;
-
-  document.getElementById("detailsDescription").textContent =
-    selectedEvent.description;
-
-  document.getElementById("detailsPrice").textContent =
-    "₹" +
-    selectedEvent.price.toLocaleString("en-IN");
-
-
-  const detailsHeart =
-    document.getElementById("detailsHeart");
-
-
-  detailsHeart.textContent =
-    favoriteEvents.includes(selectedEvent.name)
-      ? "♥"
-      : "♡";
-
-
-  detailsHeart.classList.toggle(
-    "favorited",
-    favoriteEvents.includes(selectedEvent.name)
-  );
-
-
-  document.getElementById("ticketEventName").textContent =
-    selectedEvent.name;
-
-
-  showScreen("detailsScreen");
-
-}
-
-
-function backToHome() {
-
-  showScreen("homeScreen");
-
-}
-
-
-function openTickets() {
-
-  resetTicketQuantities();
-
-  document.getElementById("ticketEventName").textContent =
-    selectedEvent.name;
-
-  showScreen("ticketsScreen");
-
-  updateTicketSummary();
-
-}
-
-
-function backToDetails() {
-
-  showScreen("detailsScreen");
-
-}
-
-
-/* =====================================================
-   FAVORITES
-===================================================== */
-
-function toggleFavorite(button, event) {
-
-  event.stopPropagation();
-
-  const card =
-    button.closest(".home-event-card");
-
-  const eventName =
-    card.querySelector("h3").textContent;
-
-
-  if (favoriteEvents.includes(eventName)) {
-
-    favoriteEvents =
-      favoriteEvents.filter(
-        name => name !== eventName
-      );
-
-    button.textContent = "♡";
-
-    button.classList.remove("favorited");
-
-  } else {
-
-    favoriteEvents.push(eventName);
-
-    button.textContent = "♥";
-
-    button.classList.add("favorited");
-
-  }
-
-
-  updateFavoriteCount();
-
-  updateFavoriteDashboard();
-
-}
-
-
-function toggleDetailsFavorite(button, event) {
-
-  event.stopPropagation();
-
-  const eventName =
-    selectedEvent.name;
-
-
-  if (favoriteEvents.includes(eventName)) {
-
-    favoriteEvents =
-      favoriteEvents.filter(
-        name => name !== eventName
-      );
-
-    button.textContent = "♡";
-
-    button.classList.remove("favorited");
-
-  } else {
-
-    favoriteEvents.push(eventName);
-
-    button.textContent = "♥";
-
-    button.classList.add("favorited");
-
-  }
-
-
-  updateFavoriteCount();
-
-  updateFavoriteDashboard();
-
-}
-
-
-function updateFavoriteCount() {
-
-  const countElement =
-    document.getElementById("favoriteCount");
-
-  if (countElement) {
-
-    countElement.textContent =
-      favoriteEvents.length;
-
-  }
-
-}
-
-
-function updateFavoriteDashboard() {
-
-  const container =
-    document.getElementById("favoriteDashboard");
-
-  if (!container) {
-    return;
-  }
-
-
-  if (favoriteEvents.length === 0) {
-
-    container.innerHTML = `
-      <div class="favorite-placeholder">♡</div>
-
-      <div>
-        <h3>No favorite events yet</h3>
-
-        <p>
-          Tap the heart icon on an event to save it for later.
-        </p>
-      </div>
-    `;
-
-    return;
-
-  }
-
-
-  container.innerHTML =
-    favoriteEvents.map(name => `
-
-      <div style="
-        display:flex;
-        align-items:center;
-        gap:15px;
-        width:100%;
-        margin-bottom:10px;
-      ">
-
-        <div class="favorite-placeholder">
-          ♥
-        </div>
-
-        <div>
-
-          <h3>${name}</h3>
-
-          <p>
-            Saved to your favorite events.
-          </p>
-
-        </div>
-
-      </div>
-
-    `).join("");
-
-}
-
-
-/* =====================================================
-   TICKETS
-===================================================== */
-
-function resetTicketQuantities() {
-
-  ticketQuantities = {
-    general: 1,
-    vip: 0,
-    early: 0
-  };
-
-
-  document.getElementById(
-    "generalQuantity"
-  ).textContent = "1";
-
-  document.getElementById(
-    "vipQuantity"
-  ).textContent = "0";
-
-  document.getElementById(
-    "earlyQuantity"
-  ).textContent = "0";
-
-}
-
-
-function changeQuantity(type, amount) {
-
-  const newQuantity =
-    ticketQuantities[type] + amount;
-
-
-  if (newQuantity < 0) {
-    return;
-  }
-
-
-  ticketQuantities[type] =
-    newQuantity;
-
-
-  document.getElementById(
-    type + "Quantity"
-  ).textContent =
-    newQuantity;
-
-
-  updateTicketSummary();
-
-}
-
-
-function updateTicketSummary() {
-
-  const general =
-    ticketQuantities.general;
-
-  const vip =
-    ticketQuantities.vip;
-
-  const early =
-    ticketQuantities.early;
-
-
-  const totalTickets =
-    general + vip + early;
-
-
-  const totalPrice =
-    general * ticketPrices.general +
-    vip * ticketPrices.vip +
-    early * ticketPrices.early;
-
-
-  document.getElementById(
-    "ticketCount"
-  ).textContent =
-    totalTickets === 1
-      ? "1 ticket"
-      : totalTickets + " tickets";
-
-
-  document.getElementById(
-    "ticketTotal"
-  ).textContent =
-    "₹" +
-    totalPrice.toLocaleString("en-IN");
-
-}
-
-
-/* =====================================================
-   SUMMARY
-===================================================== */
-
-function openSummary() {
-
-  const totalTickets =
-    ticketQuantities.general +
-    ticketQuantities.vip +
-    ticketQuantities.early;
-
-
-  if (totalTickets === 0) {
-
-    alert(
-      "Please select at least one ticket."
-    );
-
-    return;
-
-  }
-
-
-  document.getElementById(
-    "summaryCategory"
-  ).textContent =
-    selectedEvent.category;
-
-
-  document.getElementById(
-    "summaryEventName"
-  ).textContent =
-    selectedEvent.name;
-
-
-  document.getElementById(
-    "summaryDate"
-  ).textContent =
-    "📅 " + selectedEvent.date;
-
-
-  document.getElementById(
-    "summaryTime"
-  ).textContent =
-    "🕐 " + selectedEvent.time;
-
-
-  document.getElementById(
-    "summaryVenue"
-  ).textContent =
-    "📍 " + selectedEvent.venue;
-
-
-  document.getElementById(
-    "summaryImageLabel"
-  ).textContent =
-    selectedEvent.imageLabel;
-
-
-  showScreen("summaryScreen");
-
-  updateOrderSummary();
-
-}
-
-
-function updateOrderSummary() {
-
-  const orderItems =
-    document.getElementById("orderItems");
-
-
-  orderItems.innerHTML = "";
-
-
-  let subtotal = 0;
-
-
-  const tickets = [
-
-    {
-      name: "General Admission",
-      quantity: ticketQuantities.general,
-      price: ticketPrices.general
-    },
-
-    {
-      name: "VIP Ticket",
-      quantity: ticketQuantities.vip,
-      price: ticketPrices.vip
-    },
-
-    {
-      name: "Early Bird",
-      quantity: ticketQuantities.early,
-      price: ticketPrices.early
-    }
-
-  ];
-
-
-  tickets.forEach(ticket => {
-
-    if (ticket.quantity > 0) {
-
-      const itemTotal =
-        ticket.quantity * ticket.price;
-
-
-      subtotal += itemTotal;
-
-
-      orderItems.innerHTML += `
-
-        <div class="order-item">
-
-          <div class="order-item-info">
-
-            <strong>
-              ${ticket.name}
-            </strong>
-
-            <span>
-              ${ticket.quantity}
-              ×
-              ₹${ticket.price.toLocaleString("en-IN")}
-            </span>
-
+          <div class="history-icon">
+            🎵
           </div>
 
-          <span>
-            ₹${itemTotal.toLocaleString("en-IN")}
+          <div>
+            <h3>
+              Indie Nights: Live in Pune
+            </h3>
+
+            <p>
+              18 Oct 2026 · Music
+            </p>
+          </div>
+
+          <span class="history-status">
+            Confirmed
           </span>
 
         </div>
 
-      `;
+      </section>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       JAVASCRIPT
+  ========================== -->
+
+  <script>
+
+    /* =========================
+       GLOBAL VARIABLES
+    ========================== */
+
+    let favoriteEvents = [];
+
+    let currentBookingId = null;
+
+    let ticketQuantities = {
+      general: 1,
+      vip: 0,
+      early: 0
+    };
+
+    const ticketPrices = {
+      general: 999,
+      vip: 1499,
+      early: 799
+    };
+
+
+    /* =========================
+       SCREEN NAVIGATION
+    ========================== */
+
+    const allScreens = [
+      "welcomeScreen",
+      "loginScreen",
+      "signupScreen",
+      "homeScreen",
+      "detailsScreen",
+      "ticketsScreen",
+      "summaryScreen",
+      "confirmationScreen",
+      "dashboardScreen"
+    ];
+
+
+    function showOnly(screenId) {
+
+      allScreens.forEach(function(id) {
+
+        const element =
+          document.getElementById(id);
+
+        if (element) {
+          element.style.display = "none";
+        }
+
+      });
+
+
+      const target =
+        document.getElementById(screenId);
+
+
+      if (!target) return;
+
+
+      if (
+        screenId === "loginScreen" ||
+        screenId === "signupScreen" ||
+        screenId === "welcomeScreen"
+      ) {
+        target.style.display = "flex";
+      } else {
+        target.style.display = "block";
+      }
+
+
+      window.scrollTo(0,0);
+    }
+
+
+    /* =========================
+       WELCOME
+    ========================== */
+
+    function startEventra() {
+      showOnly("loginScreen");
+    }
+
+
+    /* =========================
+       LOGIN
+    ========================== */
+
+    function loginEventra(event) {
+
+      event.preventDefault();
+
+      showOnly("homeScreen");
 
     }
 
-  });
 
+    function openLogin(event) {
 
-  const bookingFee = 50;
+      if (event) {
+        event.preventDefault();
+      }
 
-  const total =
-    subtotal + bookingFee;
+      showOnly("loginScreen");
 
+    }
 
-  document.getElementById(
-    "summarySubtotal"
-  ).textContent =
-    "₹" +
-    subtotal.toLocaleString("en-IN");
 
+    function forgotPassword(event) {
 
-  document.getElementById(
-    "bookingFee"
-  ).textContent =
-    "₹" +
-    bookingFee.toLocaleString("en-IN");
+      event.preventDefault();
 
+      alert(
+        "Password reset screen coming soon."
+      );
 
-  document.getElementById(
-    "summaryTotal"
-  ).textContent =
-    "₹" +
-    total.toLocaleString("en-IN");
+    }
 
-}
 
+    function googleLogin() {
 
-function backToTickets() {
+      alert(
+        "Google login selected."
+      );
 
-  showScreen("ticketsScreen");
+    }
 
-}
 
+    /* =========================
+       SIGN UP
+    ========================== */
 
-/* =====================================================
-   CONFIRMATION
-===================================================== */
+    function openSignup(event) {
 
-function confirmBooking() {
+      if (event) {
+        event.preventDefault();
+      }
 
-  const totalTickets =
-    ticketQuantities.general +
-    ticketQuantities.vip +
-    ticketQuantities.early;
+      showOnly("signupScreen");
 
+    }
 
-  if (totalTickets === 0) {
 
-    alert(
-      "Please select at least one ticket."
-    );
+    function signupAccount(event) {
 
-    return;
+      event.preventDefault();
 
-  }
 
+      const name =
+        document.getElementById("signupName")
+          .value.trim();
 
-  const bookingId =
-    "EVT-" +
-    new Date().getFullYear() +
-    "-" +
-    Math.floor(
-      10000 + Math.random() * 90000
-    );
+      const email =
+        document.getElementById("signupEmail")
+          .value.trim();
 
+      const password =
+        document.getElementById("signupPassword")
+          .value;
 
-  currentBookingId =
-    bookingId;
+      const confirmPassword =
+        document.getElementById("confirmPassword")
+          .value;
 
 
-  document.getElementById(
-    "bookingId"
-  ).textContent =
-    bookingId;
+      if (password !== confirmPassword) {
 
+        alert(
+          "Passwords do not match. Please try again."
+        );
 
-  document.getElementById(
-    "confirmedTicketCount"
-  ).textContent =
-    totalTickets === 1
-      ? "1 Ticket"
-      : totalTickets + " Tickets";
+        return;
+      }
 
 
-  document.getElementById(
-    "confirmationEventName"
-  ).textContent =
-    selectedEvent.name;
+      if (password.length < 6) {
 
+        alert(
+          "Password must contain at least 6 characters."
+        );
 
-  document.getElementById(
-    "confirmationDate"
-  ).textContent =
-    selectedEvent.shortDate;
+        return;
+      }
 
 
-  document.getElementById(
-    "confirmationTime"
-  ).textContent =
-    selectedEvent.time
-      .split("–")[0]
-      .trim();
+      alert(
+        "Account created successfully! Welcome to Eventra, "
+        + name
+        + "."
+      );
 
 
-  document.getElementById(
-    "confirmationVenue"
-  ).textContent =
-    selectedEvent.venue;
+      document.getElementById("loginEmail").value =
+        email;
 
 
-  updateDashboard();
+      showOnly("homeScreen");
 
+    }
 
-  showScreen("confirmationScreen");
 
-}
+    /* =========================
+       HOME
+    ========================== */
 
+    function showHome(event) {
 
-function goToHome() {
+      if (event) {
+        event.preventDefault();
+      }
 
-  showScreen("homeScreen");
+      showOnly("homeScreen");
 
-}
+    }
 
 
-function downloadTicket() {
+    function showAllEvents(event) {
 
-  if (!currentBookingId) {
+      if (event) {
+        event.preventDefault();
+      }
 
-    alert(
-      "Please confirm your booking first."
-    );
 
-    return;
+      const cards =
+        document.querySelectorAll(
+          ".home-event-card"
+        );
 
-  }
 
+      cards.forEach(function(card) {
+        card.style.display = "";
+      });
 
-  const ticketText =
 
-`EVENTRA — BOOKING CONFIRMATION
+      const search =
+        document.getElementById("eventSearch");
 
-Event: ${selectedEvent.name}
-Date: ${selectedEvent.date}
-Time: ${selectedEvent.time}
-Venue: ${selectedEvent.venue}
-Booking ID: ${currentBookingId}
-Tickets: ${document.getElementById("confirmedTicketCount").textContent}
 
-Discover. Experience. Remember.`;
+      if (search) {
+        search.value = "";
+      }
 
+    }
 
-  const blob =
-    new Blob(
-      [ticketText],
-      { type: "text/plain" }
-    );
 
+    function searchEvents() {
 
-  const url =
-    URL.createObjectURL(blob);
+      const searchInput =
+        document.getElementById("eventSearch");
 
 
-  const link =
-    document.createElement("a");
+      if (!searchInput) return;
 
 
-  link.href = url;
+      const search =
+        searchInput.value
+          .toLowerCase()
+          .trim();
 
-  link.download =
-    "Eventra-Ticket-" +
-    currentBookingId +
-    ".txt";
 
+      const cards =
+        document.querySelectorAll(
+          ".home-event-card"
+        );
 
-  link.click();
 
+      cards.forEach(function(card) {
 
-  URL.revokeObjectURL(url);
+        const text =
+          card.textContent.toLowerCase();
 
-}
 
+        card.style.display =
+          text.includes(search)
+            ? ""
+            : "none";
 
-/* =====================================================
-   DASHBOARD
-===================================================== */
+      });
 
-function openDashboard(event) {
+    }
 
-  if (event) {
-    event.preventDefault();
-  }
 
+    function filterCategory(category) {
 
-  updateDashboard();
+      const cards =
+        document.querySelectorAll(
+          ".home-event-card"
+        );
 
-  updateFavoriteCount();
 
-  updateFavoriteDashboard();
+      cards.forEach(function(card) {
 
+        card.style.display =
+          card.dataset.category === category
+            ? ""
+            : "none";
 
-  showScreen("dashboardScreen");
+      });
 
-}
 
+      const search =
+        document.getElementById("eventSearch");
 
-function updateDashboard() {
 
-  const totalTickets =
-    ticketQuantities.general +
-    ticketQuantities.vip +
-    ticketQuantities.early;
+      if (search) {
+        search.value = "";
+      }
 
+    }
 
-  document.getElementById(
-    "dashboardTicketCount"
-  ).textContent =
-    currentBookingId
-      ? totalTickets
-      : 0;
 
+    /* =========================
+       FAVORITES
+    ========================== */
 
-  document.getElementById(
-    "dashboardTickets"
-  ).textContent =
-    currentBookingId
-      ? (
-          totalTickets === 1
-            ? "1 Ticket"
-            : totalTickets + " Tickets"
-        )
-      : "No tickets";
+    function toggleFavorite(button,event) {
 
+      if (event) {
+        event.stopPropagation();
+      }
 
-  document.getElementById(
-    "dashboardBookingId"
-  ).textContent =
-    currentBookingId || "—";
 
+      const eventName =
+        button.dataset.eventName;
 
-  document.getElementById(
-    "dashboardEventName"
-  ).textContent =
-    selectedEvent.name;
 
+      if (favoriteEvents.includes(eventName)) {
 
-  document.getElementById(
-    "historyEventName"
-  ).textContent =
-    selectedEvent.name;
+        favoriteEvents =
+          favoriteEvents.filter(
+            function(name) {
+              return name !== eventName;
+            }
+          );
 
-}
+      } else {
 
+        favoriteEvents.push(eventName);
 
-function viewTicket() {
+      }
 
-  if (!currentBookingId) {
 
-    alert(
-      "You don't have a confirmed ticket yet."
-    );
+      syncFavoriteButtons();
 
-    return;
+      updateFavoriteCount();
 
-  }
+      updateFavoriteDashboard();
 
+    }
 
-  showScreen("confirmationScreen");
 
-}
+    function syncFavoriteButtons() {
 
+      const buttons =
+        document.querySelectorAll(
+          ".heart-btn"
+        );
 
-/* =====================================================
-   INITIAL STATE
-===================================================== */
 
-document.addEventListener(
-  "DOMContentLoaded",
-  function() {
+      buttons.forEach(function(button) {
 
-    hideAllScreens();
+        const name =
+          button.dataset.eventName;
 
-    document.getElementById(
-      "welcomeScreen"
-    ).style.display = "flex";
+
+        if (favoriteEvents.includes(name)) {
+
+          button.textContent = "♥";
+
+          button.classList.add(
+            "favorited"
+          );
+
+        } else {
+
+          button.textContent = "♡";
+
+          button.classList.remove(
+            "favorited"
+          );
+
+        }
+
+      });
+
+
+      const detailsHeart =
+        document.getElementById(
+          "detailsHeart"
+        );
+
+
+      if (detailsHeart) {
+
+        const name =
+          "Indie Nights: Live in Pune";
+
+
+        if (favoriteEvents.includes(name)) {
+
+          detailsHeart.textContent = "♥";
+
+          detailsHeart.classList.add(
+            "favorited"
+          );
+
+        } else {
+
+          detailsHeart.textContent = "♡";
+
+          detailsHeart.classList.remove(
+            "favorited"
+          );
+
+        }
+
+      }
+
+    }
+
+
+    function toggleDetailsFavorite(
+      button,
+      event
+    ) {
+
+      if (event) {
+        event.stopPropagation();
+      }
+
+
+      const eventName =
+        "Indie Nights: Live in Pune";
+
+
+      if (favoriteEvents.includes(eventName)) {
+
+        favoriteEvents =
+          favoriteEvents.filter(
+            function(name) {
+              return name !== eventName;
+            }
+          );
+
+      } else {
+
+        favoriteEvents.push(eventName);
+
+      }
+
+
+      syncFavoriteButtons();
+
+      updateFavoriteCount();
+
+      updateFavoriteDashboard();
+
+    }
+
+
+    function updateFavoriteCount() {
+
+      const count =
+        document.getElementById(
+          "favoriteCount"
+        );
+
+
+      if (count) {
+        count.textContent =
+          favoriteEvents.length;
+      }
+
+    }
+
+
+    function updateFavoriteDashboard() {
+
+      const container =
+        document.getElementById(
+          "favoriteDashboard"
+        );
+
+
+      if (!container) return;
+
+
+      if (favoriteEvents.length === 0) {
+
+        container.innerHTML = `
+          <div class="favorite-dashboard-card">
+            <div class="favorite-placeholder">♡</div>
+            <div>
+              <h3>No favorite events yet</h3>
+              <p>Tap the heart icon on an event to save it for later.</p>
+            </div>
+          </div>
+        `;
+
+        return;
+      }
+
+
+      container.innerHTML =
+        favoriteEvents.map(function(name) {
+
+          return `
+            <div class="favorite-dashboard-card">
+              <div class="favorite-placeholder">♥</div>
+              <div>
+                <h3>${name}</h3>
+                <p>Saved to your favorite events.</p>
+              </div>
+            </div>
+          `;
+
+        }).join("");
+
+    }
+
+
+    /* =========================
+       EVENT DETAILS
+    ========================== */
+
+    function openEventDetails() {
+
+      showOnly("detailsScreen");
+
+      syncFavoriteButtons();
+
+    }
+
+
+    function backToHome() {
+
+      showOnly("homeScreen");
+
+    }
+
+
+    /* =========================
+       TICKET SELECTION
+    ========================== */
+
+    function openTickets() {
+
+      showOnly("ticketsScreen");
+
+      updateTicketSummary();
+
+    }
+
+
+    function backToDetails() {
+
+      showOnly("detailsScreen");
+
+    }
+
+
+    function changeQuantity(type,amount) {
+
+      const newQuantity =
+        ticketQuantities[type] + amount;
+
+
+      if (newQuantity < 0) {
+        return;
+      }
+
+
+      ticketQuantities[type] =
+        newQuantity;
+
+
+      const element =
+        document.getElementById(
+          type + "Quantity"
+        );
+
+
+      if (element) {
+        element.textContent =
+          newQuantity;
+      }
+
+
+      updateTicketSummary();
+
+    }
+
+
+    function updateTicketSummary() {
+
+      const general =
+        ticketQuantities.general;
+
+      const vip =
+        ticketQuantities.vip;
+
+      const early =
+        ticketQuantities.early;
+
+
+      const totalTickets =
+        general + vip + early;
+
+
+      const totalPrice =
+        (general * ticketPrices.general) +
+        (vip * ticketPrices.vip) +
+        (early * ticketPrices.early);
+
+
+      document.getElementById(
+        "ticketCount"
+      ).textContent =
+        totalTickets === 1
+          ? "1 ticket"
+          : totalTickets + " tickets";
+
+
+      document.getElementById(
+        "ticketTotal"
+      ).textContent =
+        "₹" +
+        totalPrice.toLocaleString("en-IN");
+
+    }
+
+
+    /* =========================
+       SUMMARY
+    ========================== */
+
+    function openSummary() {
+
+      const totalTickets =
+        ticketQuantities.general +
+        ticketQuantities.vip +
+        ticketQuantities.early;
+
+
+      if (totalTickets === 0) {
+
+        alert(
+          "Please select at least one ticket."
+        );
+
+        return;
+      }
+
+
+      showOnly("summaryScreen");
+
+      updateOrderSummary();
+
+    }
+
+
+    function updateOrderSummary() {
+
+      const orderItems =
+        document.getElementById(
+          "orderItems"
+        );
+
+
+      orderItems.innerHTML = "";
+
+
+      let subtotal = 0;
+
+
+      const tickets = [
+
+        {
+          name: "General Admission",
+          quantity: ticketQuantities.general,
+          price: ticketPrices.general
+        },
+
+        {
+          name: "VIP Ticket",
+          quantity: ticketQuantities.vip,
+          price: ticketPrices.vip
+        },
+
+        {
+          name: "Early Bird",
+          quantity: ticketQuantities.early,
+          price: ticketPrices.early
+        }
+
+      ];
+
+
+      tickets.forEach(function(ticket) {
+
+        if (ticket.quantity > 0) {
+
+          const itemTotal =
+            ticket.quantity *
+            ticket.price;
+
+
+          subtotal += itemTotal;
+
+
+          orderItems.innerHTML += `
+            <div class="order-item">
+              <div class="order-item-info">
+                <strong>${ticket.name}</strong>
+                <span>
+                  ${ticket.quantity} ×
+                  ₹${ticket.price.toLocaleString("en-IN")}
+                </span>
+              </div>
+
+              <span>
+                ₹${itemTotal.toLocaleString("en-IN")}
+              </span>
+            </div>
+          `;
+
+        }
+
+      });
+
+
+      const bookingFee = 50;
+
+      const total =
+        subtotal + bookingFee;
+
+
+      document.getElementById(
+        "summarySubtotal"
+      ).textContent =
+        "₹" +
+        subtotal.toLocaleString("en-IN");
+
+
+      document.getElementById(
+        "bookingFee"
+      ).textContent =
+        "₹50";
+
+
+      document.getElementById(
+        "summaryTotal"
+      ).textContent =
+        "₹" +
+        total.toLocaleString("en-IN");
+
+    }
+
+
+    function backToTickets() {
+
+      showOnly("ticketsScreen");
+
+    }
+
+
+    /* =========================
+       CONFIRMATION
+    ========================== */
+
+    function confirmBooking() {
+
+      const totalTickets =
+        ticketQuantities.general +
+        ticketQuantities.vip +
+        ticketQuantities.early;
+
+
+      if (totalTickets === 0) {
+
+        alert(
+          "Please select at least one ticket."
+        );
+
+        return;
+      }
+
+
+      currentBookingId =
+        "EVT-" +
+        new Date().getFullYear() +
+        "-" +
+        Math.floor(
+          10000 +
+          Math.random() * 90000
+        );
+
+
+      document.getElementById(
+        "bookingId"
+      ).textContent =
+        currentBookingId;
+
+
+      document.getElementById(
+        "confirmedTicketCount"
+      ).textContent =
+        totalTickets === 1
+          ? "1 Ticket"
+          : totalTickets + " Tickets";
+
+
+      showOnly("confirmationScreen");
+
+      updateDashboard();
+
+    }
+
+
+    function downloadTicket() {
+
+      window.print();
+
+    }
+
+
+    /* =========================
+       DASHBOARD
+    ========================== */
+
+    function openDashboard(event) {
+
+      if (event) {
+        event.preventDefault();
+      }
+
+
+      showOnly("dashboardScreen");
+
+      updateDashboard();
+
+      updateFavoriteCount();
+
+      updateFavoriteDashboard();
+
+    }
+
+
+    function updateDashboard() {
+
+      const totalTickets =
+        ticketQuantities.general +
+        ticketQuantities.vip +
+        ticketQuantities.early;
+
+
+      document.getElementById(
+        "dashboardTicketCount"
+      ).textContent =
+        totalTickets;
+
+
+      document.getElementById(
+        "dashboardTickets"
+      ).textContent =
+        totalTickets === 1
+          ? "1 Ticket"
+          : totalTickets + " Tickets";
+
+
+      document.getElementById(
+        "dashboardBookingId"
+      ).textContent =
+        currentBookingId ||
+        "Not booked yet";
+
+    }
+
+
+    function viewTicket() {
+
+      if (!currentBookingId) {
+
+        alert(
+          "You don't have a confirmed ticket yet."
+        );
+
+        return;
+      }
+
+
+      showOnly("confirmationScreen");
+
+    }
+
+
+    function goToHome() {
+
+      showOnly("homeScreen");
+
+    }
+
+
+    /* =========================
+       INITIAL SETUP
+    ========================== */
+
+    updateTicketSummary();
 
     updateFavoriteCount();
 
-  }
-);
+    updateFavoriteDashboard();
 
-</script>
+  </script>
 
 </body>
 </html>
