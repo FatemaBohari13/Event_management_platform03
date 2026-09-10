@@ -41,7 +41,7 @@ The platform provides a simple and user-friendly experience for finding concerts
 
 ## 📂 Repository Link
 
-[Add your GitHub repository link here]
+https://github.com/FatemaBohari13/Event_management_platform03/edit/main/README.md
 
 ## 🎯 Learning Outcomes
 
